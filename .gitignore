@@ -1,0 +1,11 @@
+
+# secrets — never commit
+password.md
+
+# firecrawl local cache
+.firecrawl/
+
+.DS_Store
+*.jpeg
+*.png
+.playwright-mcp/
