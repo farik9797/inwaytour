@@ -15,6 +15,7 @@
 
 ## Репозиторий
 - GitHub (public): https://github.com/farik9797/inwaytour — ветка `main`.
+- GitHub Pages: https://farik9797.github.io/inwaytour/ (деплой из `main`, корень репозитория).
 
 ## Как запустить
 ```bash
