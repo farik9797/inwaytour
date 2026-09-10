@@ -23,6 +23,7 @@
   --bridge-width: 67.2vw; --bridge-scale: 1.02;
   --split-left-x: -50%;  --split-left-y: 0px;  --split-left-scale: 1;
   --split-right-x: -50%; --split-right-y: 0px; --split-right-scale: 1;
+  --split-opacity: 1;
   --frame2-opacity: 0; --frame2-x: -50%; --frame2-y: -50%; --frame2-scale: 1.06;
   --intro-copy-y: 0px; --intro-copy-opacity: 1;
   --panel2-opacity: 0; --panel2-y: calc(-50% + 58px);
@@ -156,7 +157,8 @@ button { border: 0; font: inherit; }
 }
 
 .sights-controls {
-  z-index: 5; left: 48px; right: auto;
+  z-index: 7; /* above the splitframe halves that stay parked at the screen edges */
+  left: 48px; right: auto;
   top: calc(var(--sights-screen-top) + 220px + 16px);
   display: flex; justify-content: flex-start; gap: 14px;
   opacity: var(--sights-controls-opacity);
@@ -188,6 +190,7 @@ button { border: 0; font: inherit; }
 }
 .splitframe-img {
   z-index: 6; left: 50%; bottom: -2vh; width: min(118vw, 2240px); height: auto; pointer-events: none;
+  opacity: var(--split-opacity);
 }
 .splitframe-left {
   transform: translate3d(var(--split-left-x), var(--split-left-y), 0) scale(var(--split-left-scale));
@@ -244,7 +247,7 @@ button { border: 0; font: inherit; }
   line-height: 1.18; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.42);
 }
 .story-panel-bridge { top: 60%; opacity: var(--panel2-opacity); transform: translate3d(-50%, var(--panel2-y), 0); }
-.story-panel-bazaar { top: 29%; opacity: var(--panel3-opacity); transform: translate3d(-50%, var(--panel3-y), 0); }
+.story-panel-bazaar { top: max(29%, 290px); /* keeps the panel clear of the header on short viewports */ opacity: var(--panel3-opacity); transform: translate3d(-50%, var(--panel3-y), 0); }
 .facts {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 86px;
   width: min(470px, 100%); margin: 72px auto 0;
@@ -328,7 +331,7 @@ button { border: 0; font: inherit; }
   .hero-tags { gap: 8px; }
   .hero-tags span { min-height: 38px; padding: 0 16px; font-size: 0.88rem; }
   .story-panel { top: 42%; }
-  .story-panel-bazaar { top: 26%; }
+  .story-panel-bazaar { top: max(26%, 300px); }
   .story-panel h2 { font-size: 2.45rem; }
   .facts { gap: 18px; margin-top: 34px; }
   .facts dt { font-size: 2.5rem; }

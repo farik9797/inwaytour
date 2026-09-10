@@ -99,6 +99,7 @@
     setVar("--bridge-width", `${(67.2 + frame2.enter * 37.8).toFixed(3)}vw`);
     setVar("--bridge-scale", (1.02 + sharedHeroScale + frame2.exit * 0.46).toFixed(4));
 
+    setVar("--split-opacity", (1 - sightsEnterRaw).toFixed(4)); // gate halves fade out as the slider arrives
     setVar("--split-left-x", `calc(-50% + ${(-splitDrift * 46).toFixed(3)}vw + ${(mouseX * 22).toFixed(3)}px)`);
     setVar("--split-left-y", `${(mouseY * 10 + sharedHeroY - splitDrift * 180).toFixed(3)}px`);
     setVar("--split-left-scale", (1 + sharedHeroScale + frame2.enter * 0.74).toFixed(4));
