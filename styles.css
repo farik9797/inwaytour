@@ -114,7 +114,8 @@ button { border: 0; font: inherit; }
 
 /* ---------- Sights slider ---------- */
 .sights-slider {
-  z-index: 2; left: 0; right: 0; top: var(--sights-top); padding: 0;
+  z-index: 4; /* above .back-bazaar so cards stay readable over the Istanbul skyline */
+  left: 0; right: 0; top: var(--sights-top); padding: 0;
   opacity: 1;
   visibility: var(--sights-visibility);
   transform: translate3d(var(--sights-enter-x), var(--sights-y), 0) scale(var(--sights-scale));
