@@ -469,6 +469,166 @@ rep('''    <a class="nav-link" href="#eternity" data-cursor><span>Контакт
     <a class="nav-call" href="tel:+998939821110" data-cursor><span>Позвонить</span><span class="alt">+998 93 982 11 10</span></a>
   </nav>''')
 
+# ---- request form in Contacts. No backend on GitHub Pages: with FORM_ENDPOINT empty the
+# submission opens a prefilled e-mail to info@inwaytour.uz; set a Formspree-style endpoint to post JSON.
+rep('''  <a class="cta" href="tel:+998939821110" data-rv="fade" data-cursor>
+    <i></i><span>Позвонить</span>''', '''  <form class="req" id="req" data-rv="up" novalidate aria-label="Форма заявки">
+    <div class="req-row">
+      <label class="req-field"><span>Имя</span><input type="text" name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
+      <label class="req-field"><span>Телефон</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" required placeholder="+998 __ ___ __ __"></label>
+    </div>
+    <label class="req-field"><span>Направление</span>
+      <select name="dest">
+        <option value="">Ещё не решил(а)</option>
+        <option>Стамбул, Турция</option><option>Дубай, ОАЭ</option><option>Бали, Индонезия</option>
+        <option>Филиппины</option><option>Вьетнам</option><option>Камбоджа</option>
+        <option>Азербайджан</option><option>Египет</option><option>Таиланд</option>
+      </select>
+    </label>
+    <label class="req-field"><span>Комментарий</span><textarea name="note" rows="3" placeholder="Даты, состав группы, пожелания"></textarea></label>
+    <div class="req-foot">
+      <button class="cta req-submit" type="submit" data-cursor>
+        <i></i><span>Отправить заявку</span>
+        <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
+      </button>
+      <p class="req-note" aria-live="polite"></p>
+    </div>
+  </form>
+  <a class="cta cta-call" href="tel:+998939821110" data-rv="fade" data-cursor>
+    <i></i><span>Позвонить</span>''')
+rep('''  show(0); arm();
+})();
+</script>''', '''  show(0); arm();
+})();
+</script>
+<script>
+/* In Way Tour: request form. Set FORM_ENDPOINT to a Formspree-style URL to post JSON;
+   until then the browser opens a prefilled e-mail to the agency. */
+(function () {
+  var FORM_ENDPOINT = '';
+  var MAIL = 'info@inwaytour.uz';
+  var form = document.getElementById('req'); if (!form) return;
+  var note = form.querySelector('.req-note'), btn = form.querySelector('.req-submit');
+  function say(t, ok) { note.textContent = t; note.classList.toggle('is-ok', !!ok); }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = new FormData(form), name = (f.get('name') || '').trim(), phone = (f.get('phone') || '').trim();
+    if (!name || phone.replace(/\\D/g, '').length < 9) { say('Укажите имя и телефон, чтобы мы могли перезвонить.'); return; }
+    var data = { name: name, phone: phone, dest: f.get('dest') || '', note: (f.get('note') || '').trim(), page: location.href };
+    if (FORM_ENDPOINT) {
+      btn.disabled = true; say('Отправляем…');
+      fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); say('Спасибо! Мы перезвоним в рабочее время, 09:00–18:00.', true); form.reset(); })
+        .catch(function () { say('Не удалось отправить. Позвоните нам: +998 93 982 11 10.'); })
+        .then(function () { btn.disabled = false; });
+      return;
+    }
+    var body = 'Имя: ' + data.name + '\\nТелефон: ' + data.phone + '\\nНаправление: ' + (data.dest || 'не выбрано') + '\\nКомментарий: ' + (data.note || '—');
+    location.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent('Заявка с сайта In Way Tour') + '&body=' + encodeURIComponent(body);
+    say('Откроется письмо с заявкой — просто отправьте его. Или позвоните: +998 93 982 11 10.', true);
+  });
+})();
+</script>''')
+
+# ---- tour popup: a card in Destinations or an item in the tour list opens a sheet with the tour
+# story and a "Забронировать" button that carries the destination into the request form.
+TOURS = {
+  'istanbul':    ('Стамбул', 'Турция', 'Босфор, Айя-София и Гранд-базар: город на двух континентах с богатой историей, потрясающей кухней и гостеприимством.', ['Экскурсии по историческому центру', 'Круиз по Босфору', 'Отели 4–5★ рядом с центром']),
+  'dubai':       ('Дубай', 'ОАЭ', 'Роскошь и размах: Бурдж-Халифа, пустынное сафари, пляжи Персидского залива и лучшие торговые центры мира.', ['Сафари по пустыне', 'Смотровая Бурдж-Халифа', 'Пляжные отели и шопинг']),
+  'bali':        ('Бали', 'Индонезия', 'Райские пляжи, древние храмы и рисовые террасы: остров для тех, кто хочет и отдохнуть, и увидеть настоящую Азию.', ['Храмы Улун Дану и Танах Лот', 'Террасы Тегаллаланг', 'Виллы и пляжные курорты']),
+  'philippines': ('Филиппины', 'Острова Палаван', 'Восхитительные пляжи, кристально чистая вода и красочные коралловые рифы живописных островов.', ['Лагуны Эль-Нидо', 'Снорклинг на рифах', 'Островные прогулки на лодках']),
+  'vietnam':     ('Вьетнам', 'Бухта Халонг', 'Яркие пляжи, культурные и природные сокровища Вьетнама и круиз среди тысяч известняковых островов.', ['Круиз по бухте Халонг', 'Ханой и Хойан', 'Пляжи Дананга']),
+  'cambodia':    ('Камбоджа', 'Ангкор-Ват', 'Знаменитый комплекс Ангкор-Ват и древние храмы, наполненные историей и мистикой. Часто в связке с Вьетнамом.', ['Рассвет над Ангкор-Ватом', 'Храмы Байон и Та-Пром', 'Сием-Реап']),
+  'azerbaijan':  ('Азербайджан', 'Баку', 'Исторические достопримечательности, уникальная культура и живописные пейзажи. Древние города и местная кухня.', ['Старый город Баку', 'Гобустан и грязевые вулканы', 'Габала и горы']),
+  'egypt':       ('Египет', 'Гиза и Красное море', 'Пирамиды Гизы, храмы Луксора и Карнака и курорты Красного моря: Шарм-эш-Шейх и Хургада для дайвинга и снорклинга.', ['Пирамиды и Сфинкс', 'Дайвинг на Красном море', 'Отели «всё включено»']),
+  'thailand':    ('Таиланд', 'Пхукет и Краби', 'Буддийские храмы Бангкока, изысканная тайская кухня и пляжи Пхукета и Ко Самуи с бирюзовой водой.', ['Храмы Бангкока', 'Острова Пхи-Пхи', 'Пляжи Пхукета и Ко Самуи']),
+}
+import json
+# cards: carry the tour id
+for slug in TOURS:
+    old = f'''<article class="card" data-rv="up" data-cursor>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-{slug}.webp')">'''
+    new = f'''<article class="card" data-rv="up" data-cursor data-tour="{slug}" tabindex="0" role="button" aria-haspopup="dialog">
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-{slug}.webp')">'''
+    rep(old, new)
+# tour list items: same ids
+for les, slug in [('0','philippines'),('1','vietnam'),('2','azerbaijan'),('3','istanbul'),('4','egypt'),('5','thailand')]:
+    rep(f'<div class="les" data-les="{les}" data-cursor>', f'<div class="les" data-les="{les}" data-cursor data-tour="{slug}" tabindex="0" role="button" aria-haspopup="dialog">')
+# sheet markup, parked after the rail (outside .page's stacking context)
+rep('<div class="rail" id="rail"></div>', '''<div class="rail" id="rail"></div>
+
+<div class="tour-modal" id="tour-modal" hidden role="dialog" aria-modal="true" aria-labelledby="tour-title">
+  <div class="tour-backdrop" data-close></div>
+  <div class="tour-sheet">
+    <button class="tour-close" type="button" data-close data-cursor aria-label="Закрыть">&times;</button>
+    <div class="tour-photo"></div>
+    <div class="tour-body">
+      <span class="k tour-kicker"><b class="tour-num"></b> — <span class="tour-place"></span></span>
+      <h3 class="display tour-title" id="tour-title"></h3>
+      <p class="body-lg tour-text"></p>
+      <ul class="tour-list"></ul>
+      <div class="tour-actions">
+        <button class="cta tour-book" type="button" data-cursor>
+          <i></i><span>Забронировать</span>
+          <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
+        </button>
+        <a class="tour-call" href="tel:+998939821110" data-cursor>+998 93 982 11 10</a>
+      </div>
+    </div>
+  </div>
+</div>''')
+tours_json = json.dumps({k: {'name': v[0], 'place': v[1], 'text': v[2], 'list': v[3]} for k, v in TOURS.items()}, ensure_ascii=False)
+rep('''<script>
+/* In Way Tour: request form.''', '''<script>
+/* In Way Tour: tour popup. */
+(function () {
+  var TOURS = ''' + tours_json + ''';
+  var ORDER = Object.keys(TOURS);
+  var modal = document.getElementById('tour-modal'); if (!modal) return;
+  var photo = modal.querySelector('.tour-photo'), title = modal.querySelector('.tour-title'), text = modal.querySelector('.tour-text');
+  var list = modal.querySelector('.tour-list'), num = modal.querySelector('.tour-num'), place = modal.querySelector('.tour-place');
+  var book = modal.querySelector('.tour-book'), current = null, lastFocus = null;
+  function open(id) {
+    var t = TOURS[id]; if (!t) return;
+    current = id; lastFocus = document.activeElement;
+    photo.style.backgroundImage = "url('secret-pathways-assets/generated/dest-" + id + ".webp')";
+    num.textContent = ('0' + (ORDER.indexOf(id) + 1)).slice(-2); place.textContent = t.place;
+    title.textContent = t.name; text.textContent = t.text;
+    list.innerHTML = ''; t.list.forEach(function (s) { var li = document.createElement('li'); li.textContent = s; list.appendChild(li); });
+    modal.hidden = false; requestAnimationFrame(function () { modal.classList.add('is-open'); });
+    document.documentElement.classList.add('tour-open');
+    if (window.__lenis) window.__lenis.stop();
+    modal.querySelector('.tour-close').focus();
+  }
+  function close() {
+    modal.classList.remove('is-open');
+    document.documentElement.classList.remove('tour-open');
+    if (window.__lenis) window.__lenis.start();
+    setTimeout(function () { modal.hidden = true; }, 420);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.querySelectorAll('[data-tour]').forEach(function (el) {
+    el.addEventListener('click', function () { open(el.dataset.tour); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(el.dataset.tour); } });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function (el) { el.addEventListener('click', close); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
+  book.addEventListener('click', function () {
+    var id = current; close();
+    var form = document.getElementById('req'); if (!form) return;
+    var sel = form.querySelector('select[name="dest"]');
+    if (sel && id) { var want = TOURS[id].name; Array.prototype.some.call(sel.options, function (o) { if (o.text.indexOf(want) === 0) { sel.value = o.value; return true; } }); }
+    var y = form.getBoundingClientRect().top + scrollY - 120;
+    setTimeout(function () {
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      setTimeout(function () { var n = form.querySelector('input[name="name"]'); if (n) n.focus({ preventScroll: true }); }, 900);
+    }, 450);
+  });
+})();
+</script>
+<script>
+/* In Way Tour: request form.''')
+
 # ---- typography sheet the <KageLandingPage /> frame appends (KAGE_TYPOGRAPHY.css at the configured props)
 TYPO = """<style id="threeui-page-typography">
 :root {
@@ -566,6 +726,61 @@ html { scroll-behavior: auto; } /* Lenis owns the easing */
   .nav-links .nav-call { display: block; width: 100%; margin-top: auto; padding: 17px 0 0; border-top: 1px solid var(--line-soft);
     color: var(--bone); text-decoration: none; font-size: 17px; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; }
   .nav-links .nav-call .alt { display: block; position: static; margin-top: 6px; font-size: 11px; letter-spacing: .12em; text-transform: none; color: var(--bone-dim); }
+}
+/* In Way Tour: request form in Contacts. */
+.req { width: min(560px, 100%); margin: clamp(30px, 5vh, 52px) auto 0; text-align: left; }
+.req-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+.req-field { display: block; margin-bottom: 22px; }
+.req-field > span { display: block; margin-bottom: 8px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.req-field input, .req-field select, .req-field textarea {
+  display: block; width: 100%; padding: 12px 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  background: transparent; color: var(--bone); font: inherit; font-size: 15px; font-weight: 300; line-height: 1.4;
+  outline: none; transition: border-color .4s var(--ease); -webkit-appearance: none; appearance: none; }
+.req-field textarea { resize: vertical; min-height: 72px; }
+.req-field select { cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, var(--bone-dim) 50%), linear-gradient(135deg, var(--bone-dim) 50%, transparent 50%);
+  background-position: calc(100% - 12px) 55%, calc(100% - 7px) 55%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 24px; }
+.req-field select option { background: #0a0e12; color: var(--bone); }
+.req-field input::placeholder, .req-field textarea::placeholder { color: rgba(223,231,224,.32); }
+.req-field input:focus, .req-field select:focus, .req-field textarea:focus { border-bottom-color: var(--bone); }
+.req-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; margin-top: 6px; }
+.req-submit { margin-top: 0; background: transparent; color: var(--bone); cursor: pointer; }
+.req-submit:disabled { opacity: .5; cursor: default; }
+.req-note { margin: 0; flex: 1 1 220px; font-size: 12px; line-height: 1.45; color: var(--ember); }
+.req-note.is-ok { color: var(--bone-dim); }
+.fin .cta-call { margin-top: 26px; }
+@media (max-width: 640px) { .req-row { grid-template-columns: 1fr; } }
+/* In Way Tour: tour popup. */
+.tour-modal { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: var(--pad); }
+.tour-modal[hidden] { display: none; }
+.tour-backdrop { position: absolute; inset: 0; background: rgba(3,6,9,.82); opacity: 0; transition: opacity .4s var(--ease); }
+.tour-sheet { position: relative; width: min(920px, 100%); max-height: calc(100svh - var(--pad) * 2); overflow: auto;
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); background: var(--ink-2); border: 1px solid var(--line);
+  opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity .45s var(--ease-out), transform .55s var(--ease-out); }
+.tour-modal.is-open .tour-backdrop { opacity: 1; }
+.tour-modal.is-open .tour-sheet { opacity: 1; transform: none; }
+.tour-photo { min-height: 420px; background: center / cover no-repeat; }
+.tour-body { padding: clamp(28px, 4vw, 52px); }
+.tour-kicker { display: block; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.tour-kicker b { color: var(--vermilion); font-weight: 500; }
+.tour-title { margin: 18px 0 0; font-size: clamp(30px, 3.6vw, 48px); line-height: 1; text-transform: uppercase; }
+.tour-text { margin: 20px 0 0; color: var(--bone-dim); }
+.tour-list { list-style: none; margin: 22px 0 0; padding: 0; }
+.tour-list li { padding: 11px 0; border-top: 1px solid var(--line-soft); font-size: 13px; color: var(--bone); }
+.tour-list li::before { content: '—'; margin-right: 12px; color: var(--vermilion); }
+.tour-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 26px; margin-top: 26px; }
+.tour-book { margin-top: 0; background: transparent; color: var(--bone); cursor: pointer; }
+.tour-call { font-size: 12px; letter-spacing: .12em; color: var(--bone-dim); text-decoration: none; }
+.tour-call:hover { color: var(--bone); }
+.tour-close { position: absolute; top: 14px; right: 14px; z-index: 2; width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid var(--line); background: rgba(3,6,9,.6); color: var(--bone); font: inherit; font-size: 22px; line-height: 1; cursor: pointer; }
+.tour-close:hover { border-color: var(--bone-dim); }
+.tour-close:focus { outline: none; }
+.tour-close:focus-visible { outline: 1px solid var(--bone-dim); outline-offset: 3px; }
+html.tour-open, html.tour-open body { overflow: hidden; }
+.dest-track .card, .les { cursor: pointer; }
+@media (max-width: 720px) {
+  .tour-sheet { grid-template-columns: 1fr; }
+  .tour-photo { min-height: 0; aspect-ratio: 16 / 10; }
 }
 /* In Way Tour: the side title is eleven letters, not three kanji, so it steps aside on narrow screens. */
 @media (max-width: 760px) { body[data-layout-hero="b"] .hero-side { display: none; } }

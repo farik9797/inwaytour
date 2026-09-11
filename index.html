@@ -979,6 +979,61 @@ html { scroll-behavior: auto; } /* Lenis owns the easing */
     color: var(--bone); text-decoration: none; font-size: 17px; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; }
   .nav-links .nav-call .alt { display: block; position: static; margin-top: 6px; font-size: 11px; letter-spacing: .12em; text-transform: none; color: var(--bone-dim); }
 }
+/* In Way Tour: request form in Contacts. */
+.req { width: min(560px, 100%); margin: clamp(30px, 5vh, 52px) auto 0; text-align: left; }
+.req-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+.req-field { display: block; margin-bottom: 22px; }
+.req-field > span { display: block; margin-bottom: 8px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.req-field input, .req-field select, .req-field textarea {
+  display: block; width: 100%; padding: 12px 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  background: transparent; color: var(--bone); font: inherit; font-size: 15px; font-weight: 300; line-height: 1.4;
+  outline: none; transition: border-color .4s var(--ease); -webkit-appearance: none; appearance: none; }
+.req-field textarea { resize: vertical; min-height: 72px; }
+.req-field select { cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, var(--bone-dim) 50%), linear-gradient(135deg, var(--bone-dim) 50%, transparent 50%);
+  background-position: calc(100% - 12px) 55%, calc(100% - 7px) 55%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 24px; }
+.req-field select option { background: #0a0e12; color: var(--bone); }
+.req-field input::placeholder, .req-field textarea::placeholder { color: rgba(223,231,224,.32); }
+.req-field input:focus, .req-field select:focus, .req-field textarea:focus { border-bottom-color: var(--bone); }
+.req-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; margin-top: 6px; }
+.req-submit { margin-top: 0; background: transparent; color: var(--bone); cursor: pointer; }
+.req-submit:disabled { opacity: .5; cursor: default; }
+.req-note { margin: 0; flex: 1 1 220px; font-size: 12px; line-height: 1.45; color: var(--ember); }
+.req-note.is-ok { color: var(--bone-dim); }
+.fin .cta-call { margin-top: 26px; }
+@media (max-width: 640px) { .req-row { grid-template-columns: 1fr; } }
+/* In Way Tour: tour popup. */
+.tour-modal { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: var(--pad); }
+.tour-modal[hidden] { display: none; }
+.tour-backdrop { position: absolute; inset: 0; background: rgba(3,6,9,.82); opacity: 0; transition: opacity .4s var(--ease); }
+.tour-sheet { position: relative; width: min(920px, 100%); max-height: calc(100svh - var(--pad) * 2); overflow: auto;
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); background: var(--ink-2); border: 1px solid var(--line);
+  opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity .45s var(--ease-out), transform .55s var(--ease-out); }
+.tour-modal.is-open .tour-backdrop { opacity: 1; }
+.tour-modal.is-open .tour-sheet { opacity: 1; transform: none; }
+.tour-photo { min-height: 420px; background: center / cover no-repeat; }
+.tour-body { padding: clamp(28px, 4vw, 52px); }
+.tour-kicker { display: block; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.tour-kicker b { color: var(--vermilion); font-weight: 500; }
+.tour-title { margin: 18px 0 0; font-size: clamp(30px, 3.6vw, 48px); line-height: 1; text-transform: uppercase; }
+.tour-text { margin: 20px 0 0; color: var(--bone-dim); }
+.tour-list { list-style: none; margin: 22px 0 0; padding: 0; }
+.tour-list li { padding: 11px 0; border-top: 1px solid var(--line-soft); font-size: 13px; color: var(--bone); }
+.tour-list li::before { content: '—'; margin-right: 12px; color: var(--vermilion); }
+.tour-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 26px; margin-top: 26px; }
+.tour-book { margin-top: 0; background: transparent; color: var(--bone); cursor: pointer; }
+.tour-call { font-size: 12px; letter-spacing: .12em; color: var(--bone-dim); text-decoration: none; }
+.tour-call:hover { color: var(--bone); }
+.tour-close { position: absolute; top: 14px; right: 14px; z-index: 2; width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid var(--line); background: rgba(3,6,9,.6); color: var(--bone); font: inherit; font-size: 22px; line-height: 1; cursor: pointer; }
+.tour-close:hover { border-color: var(--bone-dim); }
+.tour-close:focus { outline: none; }
+.tour-close:focus-visible { outline: 1px solid var(--bone-dim); outline-offset: 3px; }
+html.tour-open, html.tour-open body { overflow: hidden; }
+.dest-track .card, .les { cursor: pointer; }
+@media (max-width: 720px) {
+  .tour-sheet { grid-template-columns: 1fr; }
+  .tour-photo { min-height: 0; aspect-ratio: 16 / 10; }
+}
 /* In Way Tour: the side title is eleven letters, not three kanji, so it steps aside on narrow screens. */
 @media (max-width: 760px) { body[data-layout-hero="b"] .hero-side { display: none; } }
 /* In Way Tour: on phones the DOM wordmark sits in the gap between the intro copy and the chips. */
@@ -1122,63 +1177,63 @@ html { scroll-behavior: auto; } /* Lenis owns the easing */
     <span class="k"><b>02</b> — Направления</span><span class="rule"></span><span class="k jp">TOURS</span>
   </div>
   <div class="cards dest-track" id="cards">
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-cursor data-tour="istanbul" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-istanbul.webp')">
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Стамбул</b><span class="jp">TR</span></div>
       </div>
       <div class="card-meta"><span>Турция</span><span>01 / 09</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-cursor data-tour="dubai" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-dubai.webp')">
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Дубай</b><span class="jp">AE</span></div>
       </div>
       <div class="card-meta"><span>ОАЭ</span><span>02 / 09</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-cursor data-tour="bali" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-bali.webp')">
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Бали</b><span class="jp">ID</span></div>
       </div>
       <div class="card-meta"><span>Индонезия</span><span>03 / 09</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-cursor data-tour="philippines" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-philippines.webp')">
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Филиппины</b><span class="jp">PH</span></div>
       </div>
       <div class="card-meta"><span>Острова Палаван</span><span>04 / 09</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-cursor data-tour="vietnam" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-vietnam.webp')">
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Вьетнам</b><span class="jp">VN</span></div>
       </div>
       <div class="card-meta"><span>Бухта Халонг</span><span>05 / 09</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-cursor data-tour="cambodia" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-cambodia.webp')">
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Камбоджа</b><span class="jp">KH</span></div>
       </div>
       <div class="card-meta"><span>Ангкор-Ват</span><span>06 / 09</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-cursor data-tour="azerbaijan" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-azerbaijan.webp')">
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Азербайджан</b><span class="jp">AZ</span></div>
       </div>
       <div class="card-meta"><span>Баку</span><span>07 / 09</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-cursor data-tour="egypt" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-egypt.webp')">
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Египет</b><span class="jp">EG</span></div>
       </div>
       <div class="card-meta"><span>Гиза и Красное море</span><span>08 / 09</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-cursor data-tour="thailand" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-thailand.webp')">
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Таиланд</b><span class="jp">TH</span></div>
@@ -1204,37 +1259,37 @@ html { scroll-behavior: auto; } /* Lenis owns the easing */
       до древних городов Турции, Египта и Азербайджана.</p>
   </div>
   <div class="cur" id="cur">
-    <div class="les" data-les="0" data-cursor>
+    <div class="les" data-les="0" data-cursor data-tour="philippines" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">01</span>
       <h3>Филиппины<em class="jp">PH</em></h3>
       <p>Восхитительные пляжи, кристально чистая вода и коралловые рифы живописных островов.</p>
       <span class="t">Тропический рай</span><i class="bar"></i>
     </div>
-    <div class="les" data-les="1" data-cursor>
+    <div class="les" data-les="1" data-cursor data-tour="vietnam" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">02</span>
       <h3>Вьетнам и Камбоджа<em class="jp">VN</em></h3>
       <p>Яркие пляжи Вьетнама и древние храмы Ангкор-Вата, наполненные историей.</p>
       <span class="t">Два в одном</span><i class="bar"></i>
     </div>
-    <div class="les" data-les="2" data-cursor>
+    <div class="les" data-les="2" data-cursor data-tour="azerbaijan" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">03</span>
       <h3>Азербайджан<em class="jp">AZ</em></h3>
       <p>Древние города, уникальная культура, местная кухня и живописные пейзажи.</p>
       <span class="t">Кавказ</span><i class="bar"></i>
     </div>
-    <div class="les" data-les="3" data-cursor>
+    <div class="les" data-les="3" data-cursor data-tour="istanbul" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">04</span>
       <h3>Турция<em class="jp">TR</em></h3>
       <p>Эфес и Троя, пляжи Эгейского и Средиземного морей, гостеприимство и кухня.</p>
       <span class="t">История и курорты</span><i class="bar"></i>
     </div>
-    <div class="les" data-les="4" data-cursor>
+    <div class="les" data-les="4" data-cursor data-tour="egypt" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">05</span>
       <h3>Египет<em class="jp">EG</em></h3>
       <p>Пирамиды Гизы, храмы Луксора и курорты Красного моря для дайвинга.</p>
       <span class="t">Красное море</span><i class="bar"></i>
     </div>
-    <div class="les" data-les="5" data-cursor>
+    <div class="les" data-les="5" data-cursor data-tour="thailand" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">06</span>
       <h3>Таиланд<em class="jp">TH</em></h3>
       <p>Буддийские храмы Бангкока, тайская кухня и пляжи Пхукета и Ко Самуи.</p>
@@ -1249,7 +1304,29 @@ html { scroll-behavior: auto; } /* Lenis owns the easing */
   <h2 class="display" data-rv="up">Контакты</h2>
   <p class="body-lg" data-rv="up">Позвоните или напишите: +998 93 982 11 10, info@inwaytour.uz. Работаем с 09:00 до 18:00.
     Ташкент, ул. Паркент-2, дом 1, кв. № 17.</p>
-  <a class="cta" href="tel:+998939821110" data-rv="fade" data-cursor>
+  <form class="req" id="req" data-rv="up" novalidate aria-label="Форма заявки">
+    <div class="req-row">
+      <label class="req-field"><span>Имя</span><input type="text" name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
+      <label class="req-field"><span>Телефон</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" required placeholder="+998 __ ___ __ __"></label>
+    </div>
+    <label class="req-field"><span>Направление</span>
+      <select name="dest">
+        <option value="">Ещё не решил(а)</option>
+        <option>Стамбул, Турция</option><option>Дубай, ОАЭ</option><option>Бали, Индонезия</option>
+        <option>Филиппины</option><option>Вьетнам</option><option>Камбоджа</option>
+        <option>Азербайджан</option><option>Египет</option><option>Таиланд</option>
+      </select>
+    </label>
+    <label class="req-field"><span>Комментарий</span><textarea name="note" rows="3" placeholder="Даты, состав группы, пожелания"></textarea></label>
+    <div class="req-foot">
+      <button class="cta req-submit" type="submit" data-cursor>
+        <i></i><span>Отправить заявку</span>
+        <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
+      </button>
+      <p class="req-note" aria-live="polite"></p>
+    </div>
+  </form>
+  <a class="cta cta-call" href="tel:+998939821110" data-rv="fade" data-cursor>
     <i></i><span>Позвонить</span>
     <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
   </a>
@@ -1299,6 +1376,27 @@ html { scroll-behavior: auto; } /* Lenis owns the easing */
 
 <div class="rail" id="rail"></div>
 
+<div class="tour-modal" id="tour-modal" hidden role="dialog" aria-modal="true" aria-labelledby="tour-title">
+  <div class="tour-backdrop" data-close></div>
+  <div class="tour-sheet">
+    <button class="tour-close" type="button" data-close data-cursor aria-label="Закрыть">&times;</button>
+    <div class="tour-photo"></div>
+    <div class="tour-body">
+      <span class="k tour-kicker"><b class="tour-num"></b> — <span class="tour-place"></span></span>
+      <h3 class="display tour-title" id="tour-title"></h3>
+      <p class="body-lg tour-text"></p>
+      <ul class="tour-list"></ul>
+      <div class="tour-actions">
+        <button class="cta tour-book" type="button" data-cursor>
+          <i></i><span>Забронировать</span>
+          <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
+        </button>
+        <a class="tour-call" href="tel:+998939821110" data-cursor>+998 93 982 11 10</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* In Way Tour: hero slides. Hover or tap a chapter chip to show its photo; idle, they rotate. */
 (function () {
@@ -1327,6 +1425,81 @@ html { scroll-behavior: auto; } /* Lenis owns the easing */
   if (prev) prev.addEventListener('click', function () { show(cur - 1); arm(); });
   if (next) next.addEventListener('click', function () { show(cur + 1); arm(); });
   show(0); arm();
+})();
+</script>
+<script>
+/* In Way Tour: tour popup. */
+(function () {
+  var TOURS = {"istanbul": {"name": "Стамбул", "place": "Турция", "text": "Босфор, Айя-София и Гранд-базар: город на двух континентах с богатой историей, потрясающей кухней и гостеприимством.", "list": ["Экскурсии по историческому центру", "Круиз по Босфору", "Отели 4–5★ рядом с центром"]}, "dubai": {"name": "Дубай", "place": "ОАЭ", "text": "Роскошь и размах: Бурдж-Халифа, пустынное сафари, пляжи Персидского залива и лучшие торговые центры мира.", "list": ["Сафари по пустыне", "Смотровая Бурдж-Халифа", "Пляжные отели и шопинг"]}, "bali": {"name": "Бали", "place": "Индонезия", "text": "Райские пляжи, древние храмы и рисовые террасы: остров для тех, кто хочет и отдохнуть, и увидеть настоящую Азию.", "list": ["Храмы Улун Дану и Танах Лот", "Террасы Тегаллаланг", "Виллы и пляжные курорты"]}, "philippines": {"name": "Филиппины", "place": "Острова Палаван", "text": "Восхитительные пляжи, кристально чистая вода и красочные коралловые рифы живописных островов.", "list": ["Лагуны Эль-Нидо", "Снорклинг на рифах", "Островные прогулки на лодках"]}, "vietnam": {"name": "Вьетнам", "place": "Бухта Халонг", "text": "Яркие пляжи, культурные и природные сокровища Вьетнама и круиз среди тысяч известняковых островов.", "list": ["Круиз по бухте Халонг", "Ханой и Хойан", "Пляжи Дананга"]}, "cambodia": {"name": "Камбоджа", "place": "Ангкор-Ват", "text": "Знаменитый комплекс Ангкор-Ват и древние храмы, наполненные историей и мистикой. Часто в связке с Вьетнамом.", "list": ["Рассвет над Ангкор-Ватом", "Храмы Байон и Та-Пром", "Сием-Реап"]}, "azerbaijan": {"name": "Азербайджан", "place": "Баку", "text": "Исторические достопримечательности, уникальная культура и живописные пейзажи. Древние города и местная кухня.", "list": ["Старый город Баку", "Гобустан и грязевые вулканы", "Габала и горы"]}, "egypt": {"name": "Египет", "place": "Гиза и Красное море", "text": "Пирамиды Гизы, храмы Луксора и Карнака и курорты Красного моря: Шарм-эш-Шейх и Хургада для дайвинга и снорклинга.", "list": ["Пирамиды и Сфинкс", "Дайвинг на Красном море", "Отели «всё включено»"]}, "thailand": {"name": "Таиланд", "place": "Пхукет и Краби", "text": "Буддийские храмы Бангкока, изысканная тайская кухня и пляжи Пхукета и Ко Самуи с бирюзовой водой.", "list": ["Храмы Бангкока", "Острова Пхи-Пхи", "Пляжи Пхукета и Ко Самуи"]}};
+  var ORDER = Object.keys(TOURS);
+  var modal = document.getElementById('tour-modal'); if (!modal) return;
+  var photo = modal.querySelector('.tour-photo'), title = modal.querySelector('.tour-title'), text = modal.querySelector('.tour-text');
+  var list = modal.querySelector('.tour-list'), num = modal.querySelector('.tour-num'), place = modal.querySelector('.tour-place');
+  var book = modal.querySelector('.tour-book'), current = null, lastFocus = null;
+  function open(id) {
+    var t = TOURS[id]; if (!t) return;
+    current = id; lastFocus = document.activeElement;
+    photo.style.backgroundImage = "url('secret-pathways-assets/generated/dest-" + id + ".webp')";
+    num.textContent = ('0' + (ORDER.indexOf(id) + 1)).slice(-2); place.textContent = t.place;
+    title.textContent = t.name; text.textContent = t.text;
+    list.innerHTML = ''; t.list.forEach(function (s) { var li = document.createElement('li'); li.textContent = s; list.appendChild(li); });
+    modal.hidden = false; requestAnimationFrame(function () { modal.classList.add('is-open'); });
+    document.documentElement.classList.add('tour-open');
+    if (window.__lenis) window.__lenis.stop();
+    modal.querySelector('.tour-close').focus();
+  }
+  function close() {
+    modal.classList.remove('is-open');
+    document.documentElement.classList.remove('tour-open');
+    if (window.__lenis) window.__lenis.start();
+    setTimeout(function () { modal.hidden = true; }, 420);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.querySelectorAll('[data-tour]').forEach(function (el) {
+    el.addEventListener('click', function () { open(el.dataset.tour); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(el.dataset.tour); } });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function (el) { el.addEventListener('click', close); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
+  book.addEventListener('click', function () {
+    var id = current; close();
+    var form = document.getElementById('req'); if (!form) return;
+    var sel = form.querySelector('select[name="dest"]');
+    if (sel && id) { var want = TOURS[id].name; Array.prototype.some.call(sel.options, function (o) { if (o.text.indexOf(want) === 0) { sel.value = o.value; return true; } }); }
+    var y = form.getBoundingClientRect().top + scrollY - 120;
+    setTimeout(function () {
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      setTimeout(function () { var n = form.querySelector('input[name="name"]'); if (n) n.focus({ preventScroll: true }); }, 900);
+    }, 450);
+  });
+})();
+</script>
+<script>
+/* In Way Tour: request form. Set FORM_ENDPOINT to a Formspree-style URL to post JSON;
+   until then the browser opens a prefilled e-mail to the agency. */
+(function () {
+  var FORM_ENDPOINT = '';
+  var MAIL = 'info@inwaytour.uz';
+  var form = document.getElementById('req'); if (!form) return;
+  var note = form.querySelector('.req-note'), btn = form.querySelector('.req-submit');
+  function say(t, ok) { note.textContent = t; note.classList.toggle('is-ok', !!ok); }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = new FormData(form), name = (f.get('name') || '').trim(), phone = (f.get('phone') || '').trim();
+    if (!name || phone.replace(/\D/g, '').length < 9) { say('Укажите имя и телефон, чтобы мы могли перезвонить.'); return; }
+    var data = { name: name, phone: phone, dest: f.get('dest') || '', note: (f.get('note') || '').trim(), page: location.href };
+    if (FORM_ENDPOINT) {
+      btn.disabled = true; say('Отправляем…');
+      fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); say('Спасибо! Мы перезвоним в рабочее время, 09:00–18:00.', true); form.reset(); })
+        .catch(function () { say('Не удалось отправить. Позвоните нам: +998 93 982 11 10.'); })
+        .then(function () { btn.disabled = false; });
+      return;
+    }
+    var body = 'Имя: ' + data.name + '\nТелефон: ' + data.phone + '\nНаправление: ' + (data.dest || 'не выбрано') + '\nКомментарий: ' + (data.note || '—');
+    location.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent('Заявка с сайта In Way Tour') + '&body=' + encodeURIComponent(body);
+    say('Откроется письмо с заявкой — просто отправьте его. Или позвоните: +998 93 982 11 10.', true);
+  });
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
