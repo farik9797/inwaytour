@@ -158,7 +158,7 @@ rep('<li><a href="#top" data-cursor>Field notes</a></li>', '<li><a href="mailto:
 rep('<li><a href="#top" data-cursor>Colophon</a></li>', '<li><a href="#eternity" data-cursor>Ташкент, ул. Паркент-2, 1</a></li>')
 rep('<span>© 2026 Kage — Kage no Michi</span>', '<span>© 2024 In Way Tour</span>')
 rep('<span class="jp">静けさは一つの技である</span>', '<span class="jp">ИНН 311374859 · МФО 00433</span>')
-rep('<span>WebGL · Onest · Kyoto</span>', '<span>WebGL · Onest · Ташкент</span>')
+rep('<span>WebGL · Onest · Kyoto</span>', '<span>Onest · Ташкент</span>')
 
 # ---- script: rail labels, preloader jobs, 3D wordmark
 rep("const names = ['The Hidden Gate', 'The Sanmon', 'Still Gardens', 'Sacred Craft', 'Afterlight', 'Colophon'];",
@@ -173,6 +173,31 @@ rep("document.fonts.load('600 320px Wordmark')", "document.fonts.load('700 320px
 rep("m.font = '600 ' + SZ + 'px Wordmark, sans-serif';", "m.font = '700 ' + SZ + 'px Onest, sans-serif';")
 rep("x.font = '600 ' + SZ + 'px Wordmark, sans-serif';", "x.font = '700 ' + SZ + 'px Onest, sans-serif';")
 rep("const word = 'KAGE', gl = [];", "const word = 'IN WAY', gl = [];")
+
+# ---- no Japanese elements: the Three.js temple world is switched off (the page's own
+# nogl fallback), the foreground garden layers are dropped, the gate-shaped marks are reduced
+# to the plain disc, and the sections stand on the company's destination photos instead.
+rep("if (qs('nogl', '0') !== '0' || !window.THREE) throw new Error('webgl disabled');",
+    "if (qs('nogl', '1') !== '0' || !window.THREE) throw new Error('webgl disabled');")
+n_fg = len(re.findall(r'<div class="fg"[^>]*>.*?</div>', out, flags=re.S))
+assert n_fg == 5, n_fg
+out = re.sub(r'\n\s*<!-- foreground:[^\n]*\n\s*<div class="fg"[^>]*>.*?</div>', '', out, flags=re.S); count += 1
+assert 'class="fg"' not in out
+# preloader mark: keep the disc only
+rep('<circle cx="22" cy="24" r="9.5" stroke="#e0231c" stroke-width="1.2"/>\n        <path d="M6 12h32M9.5 17h25M22 8v28" stroke="#dfe7e0" stroke-width="1.2"/>',
+    '<circle cx="22" cy="22" r="9.5" stroke="#e0231c" stroke-width="1.2"/>')
+# nav + footer marks
+rep('<circle cx="22" cy="25" r="8.6" fill="#e0231c" fill-opacity=".9"/>\n      <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" stroke-width="1.5"/>\n      <path d="M14 35.5h16" stroke="#dfe7e0" stroke-width="1.2" stroke-opacity=".6"/>',
+    '<circle cx="22" cy="22" r="8.6" fill="#e0231c" fill-opacity=".9"/>')
+rep('<circle cx="22" cy="25" r="8.6" fill="#e0231c" fill-opacity=".9"/>\n        <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" stroke-width="1.5"/>',
+    '<circle cx="22" cy="22" r="8.6" fill="#e0231c" fill-opacity=".9"/>')
+# the hero preview is a photo teaser now, not a live 3D window
+rep('<span class="peek-cap"><b class="jp">3D</b><i>Живая сцена — к направлениям</i></span>',
+    '<span class="peek-cap"><b class="jp">01</b><i>Стамбул, Дубай, Бали — к направлениям</i></span>')
+rep('aria-label="Превью: живая сцена, перейти к направлениям"', 'aria-label="Перейти к направлениям"')
+
+# the switched-off renderer is expected here, so its log line is informational, not an error
+rep("console.error('[kage] job \"' + j[0] + '\" failed', err);", "console.info('[kage] job \"' + j[0] + '\" skipped', err);")
 
 # ---- typography sheet the <KageLandingPage /> frame appends (KAGE_TYPOGRAPHY.css at the configured props)
 TYPO = """<style id="threeui-page-typography">
@@ -193,8 +218,31 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
 .body { font-size: 14px; }
 /* In Way Tour: the .jp slots carry Latin/Cyrillic tags instead of kanji, so they use the page's own Onest. */
 .jp { font-family: 'Onest', system-ui, -apple-system, 'Helvetica Neue', sans-serif; }
+/* In Way Tour: no Japanese scene — the page runs on its own no-webgl path, on destination photos. */
+.no-webgl body { background: #05070a; }
+.no-webgl .word-fb { font-family: 'Onest', system-ui, sans-serif; font-weight: 700; letter-spacing: .06em; }
+.hero { background: linear-gradient(180deg, rgba(5,7,10,.72), rgba(5,7,10,.28) 40%, rgba(5,7,10,.55) 100%),
+  url('secret-pathways-assets/generated/bg-hero-dubai.webp') center / cover no-repeat; }
+#gate { background: linear-gradient(180deg, rgba(5,7,10,.96), rgba(5,7,10,.62) 45%, rgba(5,7,10,.96)),
+  url('secret-pathways-assets/generated/bg-about-istanbul.webp') center / cover no-repeat; }
+#pathways { background: #05070a; }
+#lessons { background: linear-gradient(180deg, rgba(5,7,10,.97), rgba(5,7,10,.66) 40%, rgba(5,7,10,.97)),
+  url('secret-pathways-assets/generated/bg-why-maiden.webp') center / cover no-repeat; }
+#eternity { background: linear-gradient(180deg, rgba(5,7,10,.94), rgba(5,7,10,.42) 55%, rgba(5,7,10,.98)),
+  url('secret-pathways-assets/generated/bg-contact-bali.webp') center / cover no-repeat; }
+.foot { background: #05070a; }
+.no-webgl .card:nth-child(1) .card-fr { background: linear-gradient(180deg,rgba(3,6,9,.04) 36%,rgba(3,6,9,.72) 100%),
+  url('secret-pathways-assets/generated/dest-istanbul.webp') center / cover no-repeat; }
+.no-webgl .card:nth-child(2) .card-fr { background: linear-gradient(180deg,rgba(3,6,9,.06) 36%,rgba(3,6,9,.74) 100%),
+  url('secret-pathways-assets/generated/dest-dubai.webp') center / cover no-repeat; }
+.no-webgl .card:nth-child(3) .card-fr { background: linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),
+  url('secret-pathways-assets/generated/dest-bali.webp') center / cover no-repeat; }
+.no-webgl .peek-fr { background: linear-gradient(180deg, rgba(3,6,9,.04) 24%, rgba(3,6,9,.48) 100%),
+  url('secret-pathways-assets/generated/dest-bali.webp') center / cover no-repeat; }
 /* In Way Tour: the side title is eleven letters, not three kanji, so it steps aside on narrow screens. */
 @media (max-width: 760px) { body[data-layout-hero="b"] .hero-side { display: none; } }
+/* In Way Tour: on phones the DOM wordmark sits in the gap between the intro copy and the chips. */
+@media (max-width: 760px) { .no-webgl .word-fb { bottom: 36%; } }
 </style>
 </head>"""
 rep('</head>', TYPO)
