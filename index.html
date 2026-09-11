@@ -938,6 +938,19 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
   url('secret-pathways-assets/generated/dest-bali.webp') center / cover no-repeat; }
 .no-webgl .peek-fr { background: linear-gradient(180deg, rgba(3,6,9,.04) 24%, rgba(3,6,9,.48) 100%),
   url('secret-pathways-assets/generated/dest-bali.webp') center / cover no-repeat; }
+/* In Way Tour: the destinations ride a pinned horizontal track. */
+#pathways { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+#pathways .sec-head { margin-bottom: clamp(22px, 4vh, 48px); }
+body[data-layout-gallery="b"] .cards.dest-track { display: flex; grid-template-columns: none; gap: clamp(14px, 1.6vw, 26px);
+  width: max-content; align-items: stretch; will-change: transform; }
+body[data-layout-gallery="b"] .dest-track .card { flex: 0 0 clamp(240px, 24vw, 380px); grid-row: auto; display: flex; flex-direction: column; }
+body[data-layout-gallery="b"] .dest-track .card-fr { flex: 0 0 auto; height: auto; min-height: 0; aspect-ratio: 4 / 5;
+  background-size: cover; background-position: center; background-repeat: no-repeat; }
+@media (max-width: 720px) {
+  body[data-layout-gallery="b"] .dest-track .card { flex-basis: 74vw; }
+  body[data-layout-gallery="b"] .dest-track .card:first-child .card-fr,
+  body[data-layout-gallery="b"] .dest-track .card:not(:first-child) .card-fr { aspect-ratio: 4 / 5; height: auto; min-height: 0; }
+}
 /* In Way Tour: the side title is eleven letters, not three kanji, so it steps aside on narrow screens. */
 @media (max-width: 760px) { body[data-layout-hero="b"] .hero-side { display: none; } }
 /* In Way Tour: on phones the DOM wordmark sits in the gap between the intro copy and the chips. */
@@ -1075,27 +1088,69 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
   <div class="sec-head" data-rv="fade">
     <span class="k"><b>02</b> — Направления</span><span class="rule"></span><span class="k jp">TOURS</span>
   </div>
-  <div class="cards" id="cards">
+  <div class="cards dest-track" id="cards">
     <article class="card" data-rv="up" data-cursor>
-      <div class="card-fr" data-frame>
-                <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-istanbul.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Стамбул</b><span class="jp">TR</span></div>
       </div>
-      <div class="card-meta"><span>Турция</span><span>01 / 03</span></div>
+      <div class="card-meta"><span>Турция</span><span>01 / 09</span></div>
     </article>
     <article class="card" data-rv="up" data-cursor>
-      <div class="card-fr" data-frame>
-                <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-dubai.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Дубай</b><span class="jp">AE</span></div>
       </div>
-      <div class="card-meta"><span>ОАЭ</span><span>02 / 03</span></div>
+      <div class="card-meta"><span>ОАЭ</span><span>02 / 09</span></div>
     </article>
     <article class="card" data-rv="up" data-cursor>
-      <div class="card-fr" data-frame>
-                <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-bali.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Бали</b><span class="jp">ID</span></div>
       </div>
-      <div class="card-meta"><span>Индонезия</span><span>03 / 03</span></div>
+      <div class="card-meta"><span>Индонезия</span><span>03 / 09</span></div>
+    </article>
+    <article class="card" data-rv="up" data-cursor>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-philippines.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+        <div class="card-lab"><b>Филиппины</b><span class="jp">PH</span></div>
+      </div>
+      <div class="card-meta"><span>Острова Палаван</span><span>04 / 09</span></div>
+    </article>
+    <article class="card" data-rv="up" data-cursor>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-vietnam.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+        <div class="card-lab"><b>Вьетнам</b><span class="jp">VN</span></div>
+      </div>
+      <div class="card-meta"><span>Бухта Халонг</span><span>05 / 09</span></div>
+    </article>
+    <article class="card" data-rv="up" data-cursor>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-cambodia.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+        <div class="card-lab"><b>Камбоджа</b><span class="jp">KH</span></div>
+      </div>
+      <div class="card-meta"><span>Ангкор-Ват</span><span>06 / 09</span></div>
+    </article>
+    <article class="card" data-rv="up" data-cursor>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-azerbaijan.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+        <div class="card-lab"><b>Азербайджан</b><span class="jp">AZ</span></div>
+      </div>
+      <div class="card-meta"><span>Баку</span><span>07 / 09</span></div>
+    </article>
+    <article class="card" data-rv="up" data-cursor>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-egypt.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+        <div class="card-lab"><b>Египет</b><span class="jp">EG</span></div>
+      </div>
+      <div class="card-meta"><span>Гиза и Красное море</span><span>08 / 09</span></div>
+    </article>
+    <article class="card" data-rv="up" data-cursor>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-thailand.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+        <div class="card-lab"><b>Таиланд</b><span class="jp">TH</span></div>
+      </div>
+      <div class="card-meta"><span>Пхукет и Краби</span><span>09 / 09</span></div>
     </article>
   </div>
 </section>
@@ -1285,14 +1340,19 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
       gsap.fromTo(sec, { backgroundPositionY: '38%' }, { backgroundPositionY: '62%', ease: 'none',
         scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true } });
     });
-    $$('.cards .card-fr').forEach(function (fr, i) {
-      gsap.fromTo(fr, { y: 24 + i * 14 }, { y: -(24 + i * 14), ease: 'none',
-        scrollTrigger: { trigger: fr, start: 'top bottom', end: 'bottom top', scrub: true } });
-    });
+  }
+
+  function destinations() {
+    var sec = $('#pathways'), track = $('.dest-track'); if (!sec || !track) return;
+    var dist = function () { return Math.max(0, track.scrollWidth - sec.clientWidth + parseFloat(getComputedStyle(sec).paddingLeft) * 2); };
+    gsap.to(track, { x: function () { return -dist(); }, ease: 'none',
+      scrollTrigger: { trigger: sec, pin: true, start: 'top top', end: function () { return '+=' + dist(); },
+        scrub: reduce ? false : 0.6, invalidateOnRefresh: true, anticipatePin: 1,
+        onRefresh: function () { if (window.__measure) window.__measure(); } } });
   }
 
   function init() {
-    parallax(); counters(); tours();
+    parallax(); destinations(); counters(); tours();
     /* the preloader locks the body; positions are only right once it lets go */
     var pre = $('#pre');
     if (pre && !pre.classList.contains('done')) {
@@ -4200,6 +4260,7 @@ function measure() {
   });
   for (let i = 1; i < anchors.length; i++) anchors[i] = Math.max(anchors[i], anchors[i - 1] + 1);
 }
+window.__measure = measure;
 function progressFor(y) {
   if (y <= anchors[0]) return 0;
   for (let i = 0; i < anchors.length - 1; i++)

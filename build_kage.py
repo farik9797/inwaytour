@@ -325,6 +325,46 @@ rep('''  show(0); arm();
 })();
 </script>''')
 
+# ---- destinations: nine cards in a pinned horizontal track (GSAP), instead of the three-card gallery.
+DESTS = [
+  ('istanbul','Стамбул','TR','Турция'), ('dubai','Дубай','AE','ОАЭ'), ('bali','Бали','ID','Индонезия'),
+  ('philippines','Филиппины','PH','Острова Палаван'), ('vietnam','Вьетнам','VN','Бухта Халонг'),
+  ('cambodia','Камбоджа','KH','Ангкор-Ват'), ('azerbaijan','Азербайджан','AZ','Баку'),
+  ('egypt','Египет','EG','Гиза и Красное море'), ('thailand','Таиланд','TH','Пхукет и Краби'),
+]
+cards = []
+for i, (slug, name, code, place) in enumerate(DESTS):
+    cards.append(f'''    <article class="card" data-rv="up" data-cursor>
+      <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-{slug}.webp')">
+        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+        <div class="card-lab"><b>{name}</b><span class="jp">{code}</span></div>
+      </div>
+      <div class="card-meta"><span>{place}</span><span>{i+1:02d} / {len(DESTS):02d}</span></div>
+    </article>''')
+start = out.index('<div class="cards" id="cards">')
+end = out.index('</div>\n</section>', start)
+out = out[:start] + '<div class="cards dest-track" id="cards">\n' + '\n'.join(cards) + '\n  ' + out[end:]
+count += 1
+assert out.count('<article class="card"') == len(DESTS)
+# the page measures its chapter anchors once; expose it so the pin spacer can be accounted for
+rep("function progressFor(y) {", "window.__measure = measure;\nfunction progressFor(y) {")
+# GSAP: pinned horizontal track replaces the per-card drift
+rep('''    $$('.cards .card-fr').forEach(function (fr, i) {
+      gsap.fromTo(fr, { y: 24 + i * 14 }, { y: -(24 + i * 14), ease: 'none',
+        scrollTrigger: { trigger: fr, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+  }''', '''  }
+
+  function destinations() {
+    var sec = $('#pathways'), track = $('.dest-track'); if (!sec || !track) return;
+    var dist = function () { return Math.max(0, track.scrollWidth - sec.clientWidth + parseFloat(getComputedStyle(sec).paddingLeft) * 2); };
+    gsap.to(track, { x: function () { return -dist(); }, ease: 'none',
+      scrollTrigger: { trigger: sec, pin: true, start: 'top top', end: function () { return '+=' + dist(); },
+        scrub: reduce ? false : 0.6, invalidateOnRefresh: true, anticipatePin: 1,
+        onRefresh: function () { if (window.__measure) window.__measure(); } } });
+  }''')
+rep("    parallax(); counters(); tours();", "    parallax(); destinations(); counters(); tours();")
+
 # ---- typography sheet the <KageLandingPage /> frame appends (KAGE_TYPOGRAPHY.css at the configured props)
 TYPO = """<style id="threeui-page-typography">
 :root {
@@ -382,6 +422,19 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
   url('secret-pathways-assets/generated/dest-bali.webp') center / cover no-repeat; }
 .no-webgl .peek-fr { background: linear-gradient(180deg, rgba(3,6,9,.04) 24%, rgba(3,6,9,.48) 100%),
   url('secret-pathways-assets/generated/dest-bali.webp') center / cover no-repeat; }
+/* In Way Tour: the destinations ride a pinned horizontal track. */
+#pathways { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+#pathways .sec-head { margin-bottom: clamp(22px, 4vh, 48px); }
+body[data-layout-gallery="b"] .cards.dest-track { display: flex; grid-template-columns: none; gap: clamp(14px, 1.6vw, 26px);
+  width: max-content; align-items: stretch; will-change: transform; }
+body[data-layout-gallery="b"] .dest-track .card { flex: 0 0 clamp(240px, 24vw, 380px); grid-row: auto; display: flex; flex-direction: column; }
+body[data-layout-gallery="b"] .dest-track .card-fr { flex: 0 0 auto; height: auto; min-height: 0; aspect-ratio: 4 / 5;
+  background-size: cover; background-position: center; background-repeat: no-repeat; }
+@media (max-width: 720px) {
+  body[data-layout-gallery="b"] .dest-track .card { flex-basis: 74vw; }
+  body[data-layout-gallery="b"] .dest-track .card:first-child .card-fr,
+  body[data-layout-gallery="b"] .dest-track .card:not(:first-child) .card-fr { aspect-ratio: 4 / 5; height: auto; min-height: 0; }
+}
 /* In Way Tour: the side title is eleven letters, not three kanji, so it steps aside on narrow screens. */
 @media (max-width: 760px) { body[data-layout-hero="b"] .hero-side { display: none; } }
 /* In Way Tour: on phones the DOM wordmark sits in the gap between the intro copy and the chips. */
