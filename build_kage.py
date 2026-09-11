@@ -43,6 +43,12 @@ rep('''Enter Kyoto through its quiet thresholds, where ritual,
       craft, and memory shape the path.''', '''Уникальные маршруты и увлекательные туры, которые
       подарят вам незабываемые эмоции и впечатления.''')
 rep('<span>Scroll to enter</span>', '<span>Листайте вниз</span>')
+rep('''      подарят вам незабываемые эмоции и впечатления.</p>
+  </div>''', '''      подарят вам незабываемые эмоции и впечатления.</p>
+    <div class="hero-slide-cap" data-rv="fade" aria-live="polite">
+      <span class="dot"></span><i>01</i><b>Дубай</b><span class="place">ОАЭ</span>
+    </div>
+  </div>''')
 rep('<b>Thresholds</b><p>Discover the hidden gates that open on to deeper paths.</p>', '<b>Индивидуальный подход</b><p>Уникальные маршруты с учётом всех пожеланий клиента.</p>')
 rep('<b>Still Gardens</b><p>Witness the courts where silence gently unfolds.</p>', '<b>Профессионализм</b><p>Опытная команда и поддержка на всех этапах путешествия.</p>')
 rep('<b>Sacred Craft</b><p>Embrace the hands and heritage that shape devotion.</p>', '<b>Широкий выбор</b><p>От экзотических пляжей до культурных столиц мира.</p>')
@@ -203,10 +209,10 @@ rep("console.error('[kage] job \"' + j[0] + '\" failed', err);", "console.info('
 rep('<section class="hero" id="hero" data-cam="0">',
     '''<section class="hero" id="hero" data-cam="0">
   <div class="hero-slides" aria-hidden="true">
-    <span class="hero-slide is-on" data-slide="0" style="background-image:url('secret-pathways-assets/generated/bg-hero-dubai.webp')"></span>
-    <span class="hero-slide" data-slide="1" style="background-image:url('secret-pathways-assets/generated/bg-about-istanbul.webp')"></span>
-    <span class="hero-slide" data-slide="2" style="background-image:url('secret-pathways-assets/generated/bg-contact-bali.webp')"></span>
-    <span class="hero-slide" data-slide="3" style="background-image:url('secret-pathways-assets/generated/bg-why-maiden.webp')"></span>
+    <span class="hero-slide is-on" data-slide="0" data-name="Дубай" data-place="ОАЭ" style="background-image:url('secret-pathways-assets/generated/bg-hero-dubai.webp')"></span>
+    <span class="hero-slide" data-slide="1" data-name="Стамбул" data-place="Турция" style="background-image:url('secret-pathways-assets/generated/bg-about-istanbul.webp')"></span>
+    <span class="hero-slide" data-slide="2" data-name="Бали" data-place="Индонезия" style="background-image:url('secret-pathways-assets/generated/bg-contact-bali.webp')"></span>
+    <span class="hero-slide" data-slide="3" data-name="Босфор" data-place="Стамбул, Турция" style="background-image:url('secret-pathways-assets/generated/bg-why-maiden.webp')"></span>
     <span class="hero-veil"></span>
   </div>''')
 rep('<div class="rail" id="rail"></div>', '''<div class="rail" id="rail"></div>
@@ -217,11 +223,17 @@ rep('<div class="rail" id="rail"></div>', '''<div class="rail" id="rail"></div>
   var slides = document.querySelectorAll('.hero-slide');
   var chips = document.querySelectorAll('[data-chip]');
   if (!slides.length || !chips.length) return;
-  var cur = 0, timer = null, held = false;
+  var cur = 0, timer = null, held = false, cap = document.querySelector('.hero-slide-cap');
   function show(i) {
     cur = (i + slides.length) % slides.length;
     slides.forEach(function (s, k) { s.classList.toggle('is-on', k === cur); });
     chips.forEach(function (c, k) { c.classList.toggle('on', k === cur); });
+    if (cap) {
+      cap.classList.remove('is-swap'); void cap.offsetWidth; cap.classList.add('is-swap');
+      cap.querySelector('i').textContent = '0' + (cur + 1);
+      cap.querySelector('b').textContent = slides[cur].dataset.name || '';
+      cap.querySelector('.place').textContent = slides[cur].dataset.place || '';
+    }
   }
   function arm() { clearInterval(timer); timer = setInterval(function () { if (!held) show(cur + 1); }, 5000); }
   chips.forEach(function (c, k) {
@@ -266,6 +278,14 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
 .hero::before { z-index: 1; }
 .peek { z-index: 2; }
 .chip.on p { color: var(--bone-dim); }
+.hero-slide-cap { display: flex; align-items: baseline; gap: 12px; margin-top: 26px;
+  font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.hero-slide-cap .dot { align-self: center; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--vermilion); box-shadow: 0 0 10px var(--vermilion); }
+.hero-slide-cap i { font-style: normal; color: var(--ember); }
+.hero-slide-cap b { font-weight: 500; color: var(--bone); letter-spacing: .2em; }
+.hero-slide-cap.is-swap b, .hero-slide-cap.is-swap .place { animation: cap-in .6s var(--ease-out) both; }
+@keyframes cap-in { from { opacity: 0; transform: translate3d(0, 6px, 0); } to { opacity: 1; transform: none; } }
 #gate { background: linear-gradient(180deg, rgba(5,7,10,.96), rgba(5,7,10,.62) 45%, rgba(5,7,10,.96)),
   url('secret-pathways-assets/generated/bg-about-istanbul.webp') center / cover no-repeat; }
 #pathways { background: #05070a; }
