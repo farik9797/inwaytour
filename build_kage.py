@@ -199,6 +199,40 @@ rep('aria-label="Превью: живая сцена, перейти к напр
 # the switched-off renderer is expected here, so its log line is informational, not an error
 rep("console.error('[kage] job \"' + j[0] + '\" failed', err);", "console.info('[kage] job \"' + j[0] + '\" skipped', err);")
 
+# ---- hero slides: the chips used to steer the 3D camera; now they switch the hero photo.
+rep('<section class="hero" id="hero" data-cam="0">',
+    '''<section class="hero" id="hero" data-cam="0">
+  <div class="hero-slides" aria-hidden="true">
+    <span class="hero-slide is-on" data-slide="0" style="background-image:url('secret-pathways-assets/generated/bg-hero-dubai.webp')"></span>
+    <span class="hero-slide" data-slide="1" style="background-image:url('secret-pathways-assets/generated/bg-about-istanbul.webp')"></span>
+    <span class="hero-slide" data-slide="2" style="background-image:url('secret-pathways-assets/generated/bg-contact-bali.webp')"></span>
+    <span class="hero-slide" data-slide="3" style="background-image:url('secret-pathways-assets/generated/bg-why-maiden.webp')"></span>
+    <span class="hero-veil"></span>
+  </div>''')
+rep('<div class="rail" id="rail"></div>', '''<div class="rail" id="rail"></div>
+
+<script>
+/* In Way Tour: hero slides. Hover or tap a chapter chip to show its photo; idle, they rotate. */
+(function () {
+  var slides = document.querySelectorAll('.hero-slide');
+  var chips = document.querySelectorAll('[data-chip]');
+  if (!slides.length || !chips.length) return;
+  var cur = 0, timer = null, held = false;
+  function show(i) {
+    cur = (i + slides.length) % slides.length;
+    slides.forEach(function (s, k) { s.classList.toggle('is-on', k === cur); });
+    chips.forEach(function (c, k) { c.classList.toggle('on', k === cur); });
+  }
+  function arm() { clearInterval(timer); timer = setInterval(function () { if (!held) show(cur + 1); }, 5000); }
+  chips.forEach(function (c, k) {
+    c.addEventListener('mouseenter', function () { held = true; show(k); });
+    c.addEventListener('mouseleave', function () { held = false; show(cur); arm(); });
+    c.addEventListener('click', function () { show(k); arm(); });
+  });
+  show(0); arm();
+})();
+</script>''')
+
 # ---- typography sheet the <KageLandingPage /> frame appends (KAGE_TYPOGRAPHY.css at the configured props)
 TYPO = """<style id="threeui-page-typography">
 :root {
@@ -221,8 +255,17 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
 /* In Way Tour: no Japanese scene — the page runs on its own no-webgl path, on destination photos. */
 .no-webgl body { background: #05070a; }
 .no-webgl .word-fb { font-family: 'Onest', system-ui, sans-serif; font-weight: 700; letter-spacing: .06em; }
-.hero { background: linear-gradient(180deg, rgba(5,7,10,.72), rgba(5,7,10,.28) 40%, rgba(5,7,10,.55) 100%),
-  url('secret-pathways-assets/generated/bg-hero-dubai.webp') center / cover no-repeat; }
+/* In Way Tour: hero slides under the copy; the chips select them. */
+.hero { background: #05070a; }
+.hero-slides { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.hero-slide { position: absolute; inset: 0; background: center / cover no-repeat; opacity: 0;
+  transform: scale(1.04); transition: opacity 1.1s var(--ease), transform 6s linear; }
+.hero-slide.is-on { opacity: 1; transform: scale(1); }
+.hero-veil { position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(5,7,10,.72), rgba(5,7,10,.28) 40%, rgba(5,7,10,.55) 100%); }
+.hero::before { z-index: 1; }
+.peek { z-index: 2; }
+.chip.on p { color: var(--bone-dim); }
 #gate { background: linear-gradient(180deg, rgba(5,7,10,.96), rgba(5,7,10,.62) 45%, rgba(5,7,10,.96)),
   url('secret-pathways-assets/generated/bg-about-istanbul.webp') center / cover no-repeat; }
 #pathways { background: #05070a; }
