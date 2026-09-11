@@ -365,6 +365,46 @@ rep('''    $$('.cards .card-fr').forEach(function (fr, i) {
   }''')
 rep("    parallax(); counters(); tours();", "    parallax(); destinations(); counters(); tours();")
 
+# ---- arrows under the destinations track (the track is scroll-driven, so an arrow scrolls the page
+# to the position where the neighbouring card sits at the left edge)
+rep('''    </article>
+  </div>
+</section>''', '''    </article>
+  </div>
+  <div class="dest-nav" aria-label="Листать направления">
+    <button class="dest-btn dest-prev" type="button" data-cursor aria-label="Предыдущее направление">&larr;</button>
+    <button class="dest-btn dest-next" type="button" data-cursor aria-label="Следующее направление">&rarr;</button>
+    <span class="dest-count"><b>01</b> / 09</span>
+  </div>
+</section>''')
+rep('''        scrub: reduce ? false : 0.6, invalidateOnRefresh: true, anticipatePin: 1,
+        onRefresh: function () { if (window.__measure) window.__measure(); } } });
+  }''', '''        scrub: reduce ? false : 0.6, invalidateOnRefresh: true, anticipatePin: 1,
+        onRefresh: function () { if (window.__measure) window.__measure(); },
+        onUpdate: function (self) { setCount(self.progress); } } });
+    var st = ScrollTrigger.getAll().filter(function (t) { return t.pin; }).pop();
+    var cards = $$('.dest-track .card'), prev = $('.dest-prev'), next = $('.dest-next'), count = $('.dest-count b');
+    var stepW = function () { return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 1; };
+    var indexAt = function (progress) { return Math.round(progress * dist() / stepW()); };
+    var lastIdx = -1;
+    function setCount(progress) {
+      var i = Math.max(0, Math.min(cards.length - 1, indexAt(progress)));
+      if (i === lastIdx) return; lastIdx = i;
+      if (count) count.textContent = (i < 9 ? '0' : '') + (i + 1);
+      if (prev) prev.disabled = i <= 0;
+      if (next) next.disabled = progress >= .999;
+    }
+    function goTo(i) {
+      i = Math.max(0, Math.min(cards.length - 1, i));
+      var p = Math.min(1, cards[i].offsetLeft / Math.max(1, dist()));
+      var y = st.start + p * (st.end - st.start);
+      window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    if (prev) prev.addEventListener('click', function () { goTo(indexAt(st.progress) - 1); });
+    if (next) next.addEventListener('click', function () { goTo(indexAt(st.progress) + 1); });
+    setCount(0);
+  }''')
+
 # ---- typography sheet the <KageLandingPage /> frame appends (KAGE_TYPOGRAPHY.css at the configured props)
 TYPO = """<style id="threeui-page-typography">
 :root {
@@ -428,13 +468,22 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
 body[data-layout-gallery="b"] .cards.dest-track { display: flex; grid-template-columns: none; gap: clamp(14px, 1.6vw, 26px);
   width: max-content; align-items: stretch; will-change: transform; }
 body[data-layout-gallery="b"] .dest-track .card { flex: 0 0 clamp(240px, 24vw, 380px); grid-row: auto; display: flex; flex-direction: column; }
-body[data-layout-gallery="b"] .dest-track .card-fr { flex: 0 0 auto; height: auto; min-height: 0; aspect-ratio: 4 / 5;
+body[data-layout-gallery="b"] .dest-track .card-fr,
+body[data-layout-gallery="b"] .dest-track .card:first-child .card-fr { flex: 0 0 auto; height: auto; min-height: 0; aspect-ratio: 4 / 5;
   background-size: cover; background-position: center; background-repeat: no-repeat; }
 @media (max-width: 720px) {
   body[data-layout-gallery="b"] .dest-track .card { flex-basis: 74vw; }
   body[data-layout-gallery="b"] .dest-track .card:first-child .card-fr,
   body[data-layout-gallery="b"] .dest-track .card:not(:first-child) .card-fr { aspect-ratio: 4 / 5; height: auto; min-height: 0; }
 }
+.dest-nav { display: flex; align-items: center; gap: 12px; margin-top: clamp(22px, 4vh, 44px); }
+.dest-btn { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: transparent;
+  color: var(--bone); font: inherit; font-size: 18px; line-height: 1; cursor: pointer;
+  transition: border-color .4s var(--ease), background .4s var(--ease), color .4s var(--ease), opacity .4s; }
+.dest-btn:hover { border-color: var(--bone-dim); background: rgba(223,231,224,.06); }
+.dest-btn:disabled { opacity: .3; cursor: default; background: transparent; border-color: var(--line); }
+.dest-count { margin-left: 8px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.dest-count b { font-weight: 500; color: var(--bone); }
 /* In Way Tour: the side title is eleven letters, not three kanji, so it steps aside on narrow screens. */
 @media (max-width: 760px) { body[data-layout-hero="b"] .hero-side { display: none; } }
 /* In Way Tour: on phones the DOM wordmark sits in the gap between the intro copy and the chips. */
