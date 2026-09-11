@@ -418,6 +418,49 @@ rep('''        scrub: reduce ? false : 0.6, invalidateOnRefresh: true, anticipat
     setCount(0);
   }''')
 
+# ---- smooth (inertial) scrolling: Lenis on top of native scroll, synced with ScrollTrigger
+rep('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>',
+    '<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>\n<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>')
+rep('''  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+''', '''  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* Lenis drives the native scroll position with inertia, so the page's own scroll listeners,
+     the pinned track and the arrows keep working. Programmatic smooth scrolls are routed to it. */
+  var lenis = null;
+  if (!reduce && window.Lenis) {
+    lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 1, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+    var nativeScrollTo = window.scrollTo.bind(window);
+    window.scrollTo = function (a, b) {
+      if (a && typeof a === 'object' && a.behavior !== 'instant') {
+        lenis.scrollTo(a.top || 0, { immediate: a.behavior === 'auto', force: true }); return;
+      }
+      return nativeScrollTo(a, b);
+    };
+    if (document.body.classList.contains('is-locked')) lenis.stop();
+    window.__lenis = lenis;
+  }
+''')
+rep('''        if (pre.classList.contains('done')) { obs.disconnect(); setTimeout(ScrollTrigger.refresh, 500); }''',
+    '''        if (pre.classList.contains('done')) { obs.disconnect(); setTimeout(ScrollTrigger.refresh, 500); if (lenis) setTimeout(function () { lenis.start(); }, 400); }''')
+
+# ---- the pinned section lives inside a pin-spacer, so offsetTop no longer means "document top":
+# chapter anchors and in-page links measure against the document instead (spacer when pinned)
+rep("window.__measure = measure;\nfunction progressFor(y) {", """window.__measure = measure;
+function docTop(el) {
+  var n = el.parentElement && el.parentElement.classList.contains('pin-spacer') ? el.parentElement : el;
+  return n.getBoundingClientRect().top + scrollY;
+}
+function progressFor(y) {""")
+rep("    return clamp(el.offsetTop + el.offsetHeight * .5 - vpH() * .5, 0, maxScroll);",
+    "    return clamp(docTop(el) + el.offsetHeight * .5 - vpH() * .5, 0, maxScroll);")
+rep("    scrollTo({ top: a.getAttribute('href') === '#top' ? 0 : t.offsetTop - 40, behavior: REDUCE ? 'auto' : 'smooth' });",
+    "    scrollTo({ top: a.getAttribute('href') === '#top' ? 0 : docTop(t) - 40, behavior: REDUCE ? 'auto' : 'smooth' });")
+
 # ---- typography sheet the <KageLandingPage /> frame appends (KAGE_TYPOGRAPHY.css at the configured props)
 TYPO = """<style id="threeui-page-typography">
 :root {
@@ -499,6 +542,7 @@ body[data-layout-gallery="b"] .dest-track .card:first-child .card-fr { flex: 0 0
 .dest-btn:disabled { opacity: .3; cursor: default; background: transparent; border-color: var(--line); }
 .dest-count { margin-left: 8px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
 .dest-count b { font-weight: 500; color: var(--bone); }
+html { scroll-behavior: auto; } /* Lenis owns the easing */
 /* In Way Tour: the side title is eleven letters, not three kanji, so it steps aside on narrow screens. */
 @media (max-width: 760px) { body[data-layout-hero="b"] .hero-side { display: none; } }
 /* In Way Tour: on phones the DOM wordmark sits in the gap between the intro copy and the chips. */
