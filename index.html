@@ -1233,6 +1233,78 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
   show(0); arm();
 })();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* In Way Tour: scroll choreography. Parallax for the hero and the photo sections, counters
+   for the company stats, a staggered entry for the tour list. Skipped under reduced motion. */
+(function () {
+  if (!window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  function counters() {
+    $$('.gate-stats b').forEach(function (b) {
+      var m = b.textContent.trim().match(/^(\d+)(\+?)$/); if (!m) return;
+      var end = +m[1], suffix = m[2], o = { v: 0 };
+      b.textContent = '0' + suffix;
+      ScrollTrigger.create({
+        trigger: b, start: 'top 85%', once: true,
+        onEnter: function () {
+          gsap.to(o, { v: end, duration: reduce ? 0 : 1.6, ease: 'power2.out',
+            onUpdate: function () { b.textContent = Math.round(o.v) + suffix; } });
+        }
+      });
+    });
+  }
+
+  function tours() {
+    var items = $$('.les'); if (!items.length) return;
+    if (reduce) return;
+    gsap.set(items, { opacity: 0, y: 28 });
+    ScrollTrigger.batch(items, {
+      start: 'top 88%', once: true,
+      onEnter: function (batch) { gsap.to(batch, { opacity: 1, y: 0, duration: .9, stagger: .09, ease: 'power3.out', overwrite: true }); }
+    });
+  }
+
+  function parallax() {
+    if (reduce) return;
+    var hero = $('#hero');
+    if (hero) {
+      gsap.to('.hero-slides', { yPercent: 16, ease: 'none',
+        scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+      var word = $('.word-fb');
+      if (word) gsap.to(word, { y: -140, letterSpacing: '.16em', opacity: 0, ease: 'none',
+        scrollTrigger: { trigger: hero, start: 'top top', end: '70% top', scrub: true } });
+    }
+    ['#gate', '#lessons', '#eternity'].forEach(function (id) {
+      var sec = $(id); if (!sec) return;
+      gsap.fromTo(sec, { backgroundPositionY: '38%' }, { backgroundPositionY: '62%', ease: 'none',
+        scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+    $$('.cards .card-fr').forEach(function (fr, i) {
+      gsap.fromTo(fr, { y: 24 + i * 14 }, { y: -(24 + i * 14), ease: 'none',
+        scrollTrigger: { trigger: fr, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+  }
+
+  function init() {
+    parallax(); counters(); tours();
+    /* the preloader locks the body; positions are only right once it lets go */
+    var pre = $('#pre');
+    if (pre && !pre.classList.contains('done')) {
+      new MutationObserver(function (_, obs) {
+        if (pre.classList.contains('done')) { obs.disconnect(); setTimeout(ScrollTrigger.refresh, 500); }
+      }).observe(pre, { attributes: true, attributeFilter: ['class'] });
+    }
+    addEventListener('load', function () { ScrollTrigger.refresh(); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
 
 <script src="secret-pathways-assets/three.min.js"></script>
 <script>
