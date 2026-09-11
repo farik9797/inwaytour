@@ -461,6 +461,14 @@ rep("    return clamp(el.offsetTop + el.offsetHeight * .5 - vpH() * .5, 0, maxSc
 rep("    scrollTo({ top: a.getAttribute('href') === '#top' ? 0 : t.offsetTop - 40, behavior: REDUCE ? 'auto' : 'smooth' });",
     "    scrollTo({ top: a.getAttribute('href') === '#top' ? 0 : docTop(t) - 40, behavior: REDUCE ? 'auto' : 'smooth' });")
 
+# ---- mobile burger: a visible round button, a phone link at the bottom of the sheet
+rep('<button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>',
+    '<button class="nav-burger" aria-label="Меню" data-cursor><i></i><i></i></button>')
+rep('''    <a class="nav-link" href="#eternity" data-cursor><span>Контакты</span><span class="alt">04</span></a>
+  </nav>''', '''    <a class="nav-link" href="#eternity" data-cursor><span>Контакты</span><span class="alt">04</span></a>
+    <a class="nav-call" href="tel:+998939821110" data-cursor><span>Позвонить</span><span class="alt">+998 93 982 11 10</span></a>
+  </nav>''')
+
 # ---- typography sheet the <KageLandingPage /> frame appends (KAGE_TYPOGRAPHY.css at the configured props)
 TYPO = """<style id="threeui-page-typography">
 :root {
@@ -543,6 +551,22 @@ body[data-layout-gallery="b"] .dest-track .card:first-child .card-fr { flex: 0 0
 .dest-count { margin-left: 8px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
 .dest-count b { font-weight: 500; color: var(--bone); }
 html { scroll-behavior: auto; } /* Lenis owns the easing */
+/* In Way Tour: the burger reads as a button on phones; the sheet ends with a call link. */
+.nav-call { display: none; }
+@media (max-width: 820px) {
+  .nav .nav-burger { width: 44px; height: 44px; margin-left: auto; border: 1px solid var(--line); border-radius: 50%;
+    background: rgba(3,6,9,.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); flex: 0 0 auto; }
+  .nav .nav-burger i { right: 11px; }
+  .nav .nav-burger i:nth-child(1) { top: 17px; width: 22px; }
+  .nav .nav-burger i:nth-child(2) { top: 25px; width: 14px; }
+  .nav .nav-burger.active { background: transparent; }
+  .nav .nav-burger.active i:nth-child(1) { top: 21px; width: 22px; transform: rotate(45deg); }
+  .nav .nav-burger.active i:nth-child(2) { top: 21px; width: 22px; transform: rotate(-45deg); }
+  .nav.menu-open .nav-burger { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .nav-links .nav-call { display: block; width: 100%; margin-top: auto; padding: 17px 0 0; border-top: 1px solid var(--line-soft);
+    color: var(--bone); text-decoration: none; font-size: 17px; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; }
+  .nav-links .nav-call .alt { display: block; position: static; margin-top: 6px; font-size: 11px; letter-spacing: .12em; text-transform: none; color: var(--bone-dim); }
+}
 /* In Way Tour: the side title is eleven letters, not three kanji, so it steps aside on narrow screens. */
 @media (max-width: 760px) { body[data-layout-hero="b"] .hero-side { display: none; } }
 /* In Way Tour: on phones the DOM wordmark sits in the gap between the intro copy and the chips. */
