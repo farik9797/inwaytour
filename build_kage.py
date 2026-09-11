@@ -17,6 +17,17 @@ def rep(old, new, n=1):
         sys.exit(f'expected {n} occurrence(s), found {c}: {old[:80]!r}')
     out = out.replace(old, new); count += 1
 
+# Длительность и цена «от», USD за человека при двухместном размещении — ОРИЕНТИРОВОЧНЫЕ, заменить реальными.
+PRICES = {
+  'istanbul': (7, 590), 'dubai': (5, 650), 'bali': (10, 1290), 'philippines': (9, 1490), 'vietnam': (8, 1190),
+  'cambodia': (7, 1090), 'azerbaijan': (5, 490), 'egypt': (8, 890), 'thailand': (8, 990),
+}
+def days_ru(n):
+    n = int(n); r = n % 10
+    return f"{n} " + ("день" if r == 1 and n % 100 != 11 else "дня" if 2 <= r <= 4 and not 12 <= n % 100 <= 14 else "дней")
+def price_ru(v): return "от $" + f"{v:,}".replace(",", " ")
+def dur_price(slug): return days_ru(PRICES[slug][0]) + ' · ' + price_ru(PRICES[slug][1])
+
 # ---- head
 rep('<html lang="en">', '<html lang="ru">')
 rep('<title>Kage — Where stillness reveals the unseen</title>', '<title>In Way Tour — Приключения ждут</title>')
@@ -115,16 +126,16 @@ rep('''Each chapter is a walk, not a lecture. You arrive at the gate, climb the
       до древних городов Турции, Египта и Азербайджана.''')
 rep('<h3>The Hidden Gate<em class="jp">山門</em></h3>', '<h3>Филиппины<em class="jp">PH</em></h3>')
 rep('<p>Why a gate is a sentence, and what you agree to when you walk under one.</p>', '<p>Восхитительные пляжи, кристально чистая вода и коралловые рифы живописных островов.</p>')
-rep('<span class="t">14 min</span>', '<span class="t">Тропический рай</span>')
+rep('<span class="t">14 min</span>', '<span class="t">' + dur_price('philippines') + '</span>')
 rep('<h3>Borrowed Scenery<em class="jp">借景</em></h3>', '<h3>Вьетнам и Камбоджа<em class="jp">VN</em></h3>')
 rep('<p>Shakkei: composing with a mountain you will never own.</p>', '<p>Яркие пляжи Вьетнама и древние храмы Ангкор-Вата, наполненные историей.</p>')
-rep('<span class="t">18 min</span>', '<span class="t">Два в одном</span>')
+rep('<span class="t">18 min</span>', '<span class="t">' + dur_price('vietnam') + '</span>')
 rep('<h3>Charred Cypress<em class="jp">焼杉</em></h3>', '<h3>Азербайджан<em class="jp">AZ</em></h3>')
 rep('<p>Yakisugi: burning a board black so the weather will let it live.</p>', '<p>Древние города, уникальная культура, местная кухня и живописные пейзажи.</p>')
-rep('<span class="t">21 min</span>', '<span class="t">Кавказ</span>')
+rep('<span class="t">21 min</span>', '<span class="t">' + dur_price('azerbaijan') + '</span>')
 rep('<h3>Lantern Light<em class="jp">灯籠</em></h3>', '<h3>Турция<em class="jp">TR</em></h3>')
 rep('<p>How a single ember decides the scale of everything around it.</p>', '<p>Эфес и Троя, пляжи Эгейского и Средиземного морей, гостеприимство и кухня.</p>')
-rep('<span class="t">17 min</span>', '<span class="t">История и курорты</span>')
+rep('<span class="t">17 min</span>', '<span class="t">' + dur_price('istanbul') + '</span>')
 rep('<h3>The Vermilion Moon<em class="jp">朱月</em></h3>', '<h3>Египет<em class="jp">EG</em></h3>')
 rep('<p>Why the moon burns red over the valley, and what the garden does with it.</p>', '<p>Пирамиды Гизы, храмы Луксора и курорты Красного моря для дайвинга.</p>')
 rep('''<span class="t">22 min</span><i class="bar"></i>
@@ -138,6 +149,9 @@ rep('''<span class="t">22 min</span><i class="bar"></i>
       <span class="t">Острова и храмы</span><i class="bar"></i>
     </div>
   </div>''')
+
+rep('<span class="t">Красное море</span>', '<span class="t">' + dur_price('egypt') + '</span>')
+rep('<span class="t">Острова и храмы</span>', '<span class="t">' + dur_price('thailand') + '</span>')
 
 # ---- 04 contacts
 rep('<div class="eyebrow" data-rv="fade">Chapter 04 — Afterlight</div>', '<div class="eyebrow" data-rv="fade">Глава 04 — Контакты</div>')
@@ -347,8 +361,10 @@ DESTS = [
 ]
 cards = []
 for i, (slug, name, code, place) in enumerate(DESTS):
+    d, pr = PRICES[slug]
     cards.append(f'''    <article class="card" data-rv="up" data-cursor>
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-{slug}.webp')">
+        <span class="card-tag"><b>{price_ru(pr)}</b><i>{days_ru(d)}</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>{name}</b><span class="jp">{code}</span></div>
       </div>
@@ -566,6 +582,11 @@ rep('<div class="rail" id="rail"></div>', '''<div class="rail" id="rail"></div>
       <span class="k tour-kicker"><b class="tour-num"></b> — <span class="tour-place"></span></span>
       <h3 class="display tour-title" id="tour-title"></h3>
       <p class="body-lg tour-text"></p>
+      <dl class="tour-facts">
+        <div><dt>Длительность</dt><dd class="tour-days"></dd></div>
+        <div><dt>Стоимость</dt><dd class="tour-price"></dd></div>
+        <div><dt>Включено</dt><dd>перелёт, отель, трансфер</dd></div>
+      </dl>
       <ul class="tour-list"></ul>
       <div class="tour-actions">
         <button class="cta tour-book" type="button" data-cursor>
@@ -577,7 +598,7 @@ rep('<div class="rail" id="rail"></div>', '''<div class="rail" id="rail"></div>
     </div>
   </div>
 </div>''')
-tours_json = json.dumps({k: {'name': v[0], 'place': v[1], 'text': v[2], 'list': v[3]} for k, v in TOURS.items()}, ensure_ascii=False)
+tours_json = json.dumps({k: {'name': v[0], 'place': v[1], 'text': v[2], 'list': v[3], 'days': days_ru(PRICES[k][0]), 'price': price_ru(PRICES[k][1])} for k, v in TOURS.items()}, ensure_ascii=False)
 rep('''<script>
 /* In Way Tour: request form.''', '''<script>
 /* In Way Tour: tour popup. */
@@ -594,6 +615,7 @@ rep('''<script>
     photo.style.backgroundImage = "url('secret-pathways-assets/generated/dest-" + id + ".webp')";
     num.textContent = ('0' + (ORDER.indexOf(id) + 1)).slice(-2); place.textContent = t.place;
     title.textContent = t.name; text.textContent = t.text;
+    modal.querySelector('.tour-days').textContent = t.days; modal.querySelector('.tour-price').textContent = t.price + ' / чел.';
     list.innerHTML = ''; t.list.forEach(function (s) { var li = document.createElement('li'); li.textContent = s; list.appendChild(li); });
     modal.hidden = false; requestAnimationFrame(function () { modal.classList.add('is-open'); });
     document.documentElement.classList.add('tour-open');
@@ -764,6 +786,13 @@ html { scroll-behavior: auto; } /* Lenis owns the easing */
 .tour-kicker b { color: var(--vermilion); font-weight: 500; }
 .tour-title { margin: 18px 0 0; font-size: clamp(30px, 3.6vw, 48px); line-height: 1; text-transform: uppercase; }
 .tour-text { margin: 20px 0 0; color: var(--bone-dim); }
+.tour-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 22px 0 0; }
+.tour-facts dt { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.tour-facts dd { margin: 6px 0 0; font-size: 14px; color: var(--bone); }
+.card-tag { position: absolute; top: 14px; left: 14px; z-index: 2; display: flex; flex-direction: column; gap: 3px;
+  padding: 8px 11px; border: 1px solid rgba(223,231,224,.18); background: rgba(3,6,9,.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.card-tag b { font-size: 12px; font-weight: 500; letter-spacing: .06em; color: var(--bone); }
+.card-tag i { font-style: normal; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--bone-dim); }
 .tour-list { list-style: none; margin: 22px 0 0; padding: 0; }
 .tour-list li { padding: 11px 0; border-top: 1px solid var(--line-soft); font-size: 13px; color: var(--bone); }
 .tour-list li::before { content: '—'; margin-right: 12px; color: var(--vermilion); }

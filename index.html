@@ -1016,6 +1016,13 @@ html { scroll-behavior: auto; } /* Lenis owns the easing */
 .tour-kicker b { color: var(--vermilion); font-weight: 500; }
 .tour-title { margin: 18px 0 0; font-size: clamp(30px, 3.6vw, 48px); line-height: 1; text-transform: uppercase; }
 .tour-text { margin: 20px 0 0; color: var(--bone-dim); }
+.tour-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 22px 0 0; }
+.tour-facts dt { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.tour-facts dd { margin: 6px 0 0; font-size: 14px; color: var(--bone); }
+.card-tag { position: absolute; top: 14px; left: 14px; z-index: 2; display: flex; flex-direction: column; gap: 3px;
+  padding: 8px 11px; border: 1px solid rgba(223,231,224,.18); background: rgba(3,6,9,.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.card-tag b { font-size: 12px; font-weight: 500; letter-spacing: .06em; color: var(--bone); }
+.card-tag i { font-style: normal; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--bone-dim); }
 .tour-list { list-style: none; margin: 22px 0 0; padding: 0; }
 .tour-list li { padding: 11px 0; border-top: 1px solid var(--line-soft); font-size: 13px; color: var(--bone); }
 .tour-list li::before { content: '—'; margin-right: 12px; color: var(--vermilion); }
@@ -1179,6 +1186,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
   <div class="cards dest-track" id="cards">
     <article class="card" data-rv="up" data-cursor data-tour="istanbul" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-istanbul.webp')">
+        <span class="card-tag"><b>от $590</b><i>7 дней</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Стамбул</b><span class="jp">TR</span></div>
       </div>
@@ -1186,6 +1194,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
     </article>
     <article class="card" data-rv="up" data-cursor data-tour="dubai" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-dubai.webp')">
+        <span class="card-tag"><b>от $650</b><i>5 дней</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Дубай</b><span class="jp">AE</span></div>
       </div>
@@ -1193,6 +1202,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
     </article>
     <article class="card" data-rv="up" data-cursor data-tour="bali" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-bali.webp')">
+        <span class="card-tag"><b>от $1 290</b><i>10 дней</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Бали</b><span class="jp">ID</span></div>
       </div>
@@ -1200,6 +1210,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
     </article>
     <article class="card" data-rv="up" data-cursor data-tour="philippines" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-philippines.webp')">
+        <span class="card-tag"><b>от $1 490</b><i>9 дней</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Филиппины</b><span class="jp">PH</span></div>
       </div>
@@ -1207,6 +1218,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
     </article>
     <article class="card" data-rv="up" data-cursor data-tour="vietnam" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-vietnam.webp')">
+        <span class="card-tag"><b>от $1 190</b><i>8 дней</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Вьетнам</b><span class="jp">VN</span></div>
       </div>
@@ -1214,6 +1226,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
     </article>
     <article class="card" data-rv="up" data-cursor data-tour="cambodia" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-cambodia.webp')">
+        <span class="card-tag"><b>от $1 090</b><i>7 дней</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Камбоджа</b><span class="jp">KH</span></div>
       </div>
@@ -1221,6 +1234,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
     </article>
     <article class="card" data-rv="up" data-cursor data-tour="azerbaijan" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-azerbaijan.webp')">
+        <span class="card-tag"><b>от $490</b><i>5 дней</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Азербайджан</b><span class="jp">AZ</span></div>
       </div>
@@ -1228,6 +1242,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
     </article>
     <article class="card" data-rv="up" data-cursor data-tour="egypt" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-egypt.webp')">
+        <span class="card-tag"><b>от $890</b><i>8 дней</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Египет</b><span class="jp">EG</span></div>
       </div>
@@ -1235,6 +1250,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
     </article>
     <article class="card" data-rv="up" data-cursor data-tour="thailand" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="card-fr" style="background-image:linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),url('secret-pathways-assets/generated/dest-thailand.webp')">
+        <span class="card-tag"><b>от $990</b><i>8 дней</i></span>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <div class="card-lab"><b>Таиланд</b><span class="jp">TH</span></div>
       </div>
@@ -1263,37 +1279,37 @@ html.tour-open, html.tour-open body { overflow: hidden; }
       <span class="k">01</span>
       <h3>Филиппины<em class="jp">PH</em></h3>
       <p>Восхитительные пляжи, кристально чистая вода и коралловые рифы живописных островов.</p>
-      <span class="t">Тропический рай</span><i class="bar"></i>
+      <span class="t">9 дней · от $1 490</span><i class="bar"></i>
     </div>
     <div class="les" data-les="1" data-cursor data-tour="vietnam" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">02</span>
       <h3>Вьетнам и Камбоджа<em class="jp">VN</em></h3>
       <p>Яркие пляжи Вьетнама и древние храмы Ангкор-Вата, наполненные историей.</p>
-      <span class="t">Два в одном</span><i class="bar"></i>
+      <span class="t">8 дней · от $1 190</span><i class="bar"></i>
     </div>
     <div class="les" data-les="2" data-cursor data-tour="azerbaijan" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">03</span>
       <h3>Азербайджан<em class="jp">AZ</em></h3>
       <p>Древние города, уникальная культура, местная кухня и живописные пейзажи.</p>
-      <span class="t">Кавказ</span><i class="bar"></i>
+      <span class="t">5 дней · от $490</span><i class="bar"></i>
     </div>
     <div class="les" data-les="3" data-cursor data-tour="istanbul" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">04</span>
       <h3>Турция<em class="jp">TR</em></h3>
       <p>Эфес и Троя, пляжи Эгейского и Средиземного морей, гостеприимство и кухня.</p>
-      <span class="t">История и курорты</span><i class="bar"></i>
+      <span class="t">7 дней · от $590</span><i class="bar"></i>
     </div>
     <div class="les" data-les="4" data-cursor data-tour="egypt" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">05</span>
       <h3>Египет<em class="jp">EG</em></h3>
       <p>Пирамиды Гизы, храмы Луксора и курорты Красного моря для дайвинга.</p>
-      <span class="t">Красное море</span><i class="bar"></i>
+      <span class="t">8 дней · от $890</span><i class="bar"></i>
     </div>
     <div class="les" data-les="5" data-cursor data-tour="thailand" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="k">06</span>
       <h3>Таиланд<em class="jp">TH</em></h3>
       <p>Буддийские храмы Бангкока, тайская кухня и пляжи Пхукета и Ко Самуи.</p>
-      <span class="t">Острова и храмы</span><i class="bar"></i>
+      <span class="t">8 дней · от $990</span><i class="bar"></i>
     </div>
   </div>
 </section>
@@ -1385,6 +1401,11 @@ html.tour-open, html.tour-open body { overflow: hidden; }
       <span class="k tour-kicker"><b class="tour-num"></b> — <span class="tour-place"></span></span>
       <h3 class="display tour-title" id="tour-title"></h3>
       <p class="body-lg tour-text"></p>
+      <dl class="tour-facts">
+        <div><dt>Длительность</dt><dd class="tour-days"></dd></div>
+        <div><dt>Стоимость</dt><dd class="tour-price"></dd></div>
+        <div><dt>Включено</dt><dd>перелёт, отель, трансфер</dd></div>
+      </dl>
       <ul class="tour-list"></ul>
       <div class="tour-actions">
         <button class="cta tour-book" type="button" data-cursor>
@@ -1430,7 +1451,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
 <script>
 /* In Way Tour: tour popup. */
 (function () {
-  var TOURS = {"istanbul": {"name": "Стамбул", "place": "Турция", "text": "Босфор, Айя-София и Гранд-базар: город на двух континентах с богатой историей, потрясающей кухней и гостеприимством.", "list": ["Экскурсии по историческому центру", "Круиз по Босфору", "Отели 4–5★ рядом с центром"]}, "dubai": {"name": "Дубай", "place": "ОАЭ", "text": "Роскошь и размах: Бурдж-Халифа, пустынное сафари, пляжи Персидского залива и лучшие торговые центры мира.", "list": ["Сафари по пустыне", "Смотровая Бурдж-Халифа", "Пляжные отели и шопинг"]}, "bali": {"name": "Бали", "place": "Индонезия", "text": "Райские пляжи, древние храмы и рисовые террасы: остров для тех, кто хочет и отдохнуть, и увидеть настоящую Азию.", "list": ["Храмы Улун Дану и Танах Лот", "Террасы Тегаллаланг", "Виллы и пляжные курорты"]}, "philippines": {"name": "Филиппины", "place": "Острова Палаван", "text": "Восхитительные пляжи, кристально чистая вода и красочные коралловые рифы живописных островов.", "list": ["Лагуны Эль-Нидо", "Снорклинг на рифах", "Островные прогулки на лодках"]}, "vietnam": {"name": "Вьетнам", "place": "Бухта Халонг", "text": "Яркие пляжи, культурные и природные сокровища Вьетнама и круиз среди тысяч известняковых островов.", "list": ["Круиз по бухте Халонг", "Ханой и Хойан", "Пляжи Дананга"]}, "cambodia": {"name": "Камбоджа", "place": "Ангкор-Ват", "text": "Знаменитый комплекс Ангкор-Ват и древние храмы, наполненные историей и мистикой. Часто в связке с Вьетнамом.", "list": ["Рассвет над Ангкор-Ватом", "Храмы Байон и Та-Пром", "Сием-Реап"]}, "azerbaijan": {"name": "Азербайджан", "place": "Баку", "text": "Исторические достопримечательности, уникальная культура и живописные пейзажи. Древние города и местная кухня.", "list": ["Старый город Баку", "Гобустан и грязевые вулканы", "Габала и горы"]}, "egypt": {"name": "Египет", "place": "Гиза и Красное море", "text": "Пирамиды Гизы, храмы Луксора и Карнака и курорты Красного моря: Шарм-эш-Шейх и Хургада для дайвинга и снорклинга.", "list": ["Пирамиды и Сфинкс", "Дайвинг на Красном море", "Отели «всё включено»"]}, "thailand": {"name": "Таиланд", "place": "Пхукет и Краби", "text": "Буддийские храмы Бангкока, изысканная тайская кухня и пляжи Пхукета и Ко Самуи с бирюзовой водой.", "list": ["Храмы Бангкока", "Острова Пхи-Пхи", "Пляжи Пхукета и Ко Самуи"]}};
+  var TOURS = {"istanbul": {"name": "Стамбул", "place": "Турция", "text": "Босфор, Айя-София и Гранд-базар: город на двух континентах с богатой историей, потрясающей кухней и гостеприимством.", "list": ["Экскурсии по историческому центру", "Круиз по Босфору", "Отели 4–5★ рядом с центром"], "days": "7 дней", "price": "от $590"}, "dubai": {"name": "Дубай", "place": "ОАЭ", "text": "Роскошь и размах: Бурдж-Халифа, пустынное сафари, пляжи Персидского залива и лучшие торговые центры мира.", "list": ["Сафари по пустыне", "Смотровая Бурдж-Халифа", "Пляжные отели и шопинг"], "days": "5 дней", "price": "от $650"}, "bali": {"name": "Бали", "place": "Индонезия", "text": "Райские пляжи, древние храмы и рисовые террасы: остров для тех, кто хочет и отдохнуть, и увидеть настоящую Азию.", "list": ["Храмы Улун Дану и Танах Лот", "Террасы Тегаллаланг", "Виллы и пляжные курорты"], "days": "10 дней", "price": "от $1 290"}, "philippines": {"name": "Филиппины", "place": "Острова Палаван", "text": "Восхитительные пляжи, кристально чистая вода и красочные коралловые рифы живописных островов.", "list": ["Лагуны Эль-Нидо", "Снорклинг на рифах", "Островные прогулки на лодках"], "days": "9 дней", "price": "от $1 490"}, "vietnam": {"name": "Вьетнам", "place": "Бухта Халонг", "text": "Яркие пляжи, культурные и природные сокровища Вьетнама и круиз среди тысяч известняковых островов.", "list": ["Круиз по бухте Халонг", "Ханой и Хойан", "Пляжи Дананга"], "days": "8 дней", "price": "от $1 190"}, "cambodia": {"name": "Камбоджа", "place": "Ангкор-Ват", "text": "Знаменитый комплекс Ангкор-Ват и древние храмы, наполненные историей и мистикой. Часто в связке с Вьетнамом.", "list": ["Рассвет над Ангкор-Ватом", "Храмы Байон и Та-Пром", "Сием-Реап"], "days": "7 дней", "price": "от $1 090"}, "azerbaijan": {"name": "Азербайджан", "place": "Баку", "text": "Исторические достопримечательности, уникальная культура и живописные пейзажи. Древние города и местная кухня.", "list": ["Старый город Баку", "Гобустан и грязевые вулканы", "Габала и горы"], "days": "5 дней", "price": "от $490"}, "egypt": {"name": "Египет", "place": "Гиза и Красное море", "text": "Пирамиды Гизы, храмы Луксора и Карнака и курорты Красного моря: Шарм-эш-Шейх и Хургада для дайвинга и снорклинга.", "list": ["Пирамиды и Сфинкс", "Дайвинг на Красном море", "Отели «всё включено»"], "days": "8 дней", "price": "от $890"}, "thailand": {"name": "Таиланд", "place": "Пхукет и Краби", "text": "Буддийские храмы Бангкока, изысканная тайская кухня и пляжи Пхукета и Ко Самуи с бирюзовой водой.", "list": ["Храмы Бангкока", "Острова Пхи-Пхи", "Пляжи Пхукета и Ко Самуи"], "days": "8 дней", "price": "от $990"}};
   var ORDER = Object.keys(TOURS);
   var modal = document.getElementById('tour-modal'); if (!modal) return;
   var photo = modal.querySelector('.tour-photo'), title = modal.querySelector('.tour-title'), text = modal.querySelector('.tour-text');
@@ -1442,6 +1463,7 @@ html.tour-open, html.tour-open body { overflow: hidden; }
     photo.style.backgroundImage = "url('secret-pathways-assets/generated/dest-" + id + ".webp')";
     num.textContent = ('0' + (ORDER.indexOf(id) + 1)).slice(-2); place.textContent = t.place;
     title.textContent = t.name; text.textContent = t.text;
+    modal.querySelector('.tour-days').textContent = t.days; modal.querySelector('.tour-price').textContent = t.price + ' / чел.';
     list.innerHTML = ''; t.list.forEach(function (s) { var li = document.createElement('li'); li.textContent = s; list.appendChild(li); });
     modal.hidden = false; requestAnimationFrame(function () { modal.classList.add('is-open'); });
     document.documentElement.classList.add('tour-open');
