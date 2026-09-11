@@ -48,6 +48,10 @@ rep('''      подарят вам незабываемые эмоции и вп
     <div class="hero-slide-cap" data-rv="fade" aria-live="polite">
       <span class="dot"></span><i>01</i><b>Дубай</b><span class="place">ОАЭ</span>
     </div>
+    <div class="hero-slide-nav" aria-label="Листать слайды">
+      <button class="dest-btn hero-prev" type="button" data-cursor aria-label="Предыдущий слайд">&larr;</button>
+      <button class="dest-btn hero-next" type="button" data-cursor aria-label="Следующий слайд">&rarr;</button>
+    </div>
   </div>''')
 rep('<b>Thresholds</b><p>Discover the hidden gates that open on to deeper paths.</p>', '<b>Индивидуальный подход</b><p>Уникальные маршруты с учётом всех пожеланий клиента.</p>')
 rep('<b>Still Gardens</b><p>Witness the courts where silence gently unfolds.</p>', '<b>Профессионализм</b><p>Опытная команда и поддержка на всех этапах путешествия.</p>')
@@ -241,15 +245,24 @@ rep('<div class="rail" id="rail"></div>', '''<div class="rail" id="rail"></div>
     c.addEventListener('mouseleave', function () { held = false; show(cur); arm(); });
     c.addEventListener('click', function () { show(k); arm(); });
   });
+  var prev = document.querySelector('.hero-prev'), next = document.querySelector('.hero-next');
+  if (prev) prev.addEventListener('click', function () { show(cur - 1); arm(); });
+  if (next) next.addEventListener('click', function () { show(cur + 1); arm(); });
   show(0); arm();
 })();
 </script>''')
 
 # ---- scroll animation layer: GSAP + ScrollTrigger on top of the page's own reveals.
 # Targets are chosen so nothing the page already animates ([data-rv], hero-exit set) is touched.
-rep('''  show(0); arm();
+rep('''  var prev = document.querySelector('.hero-prev'), next = document.querySelector('.hero-next');
+  if (prev) prev.addEventListener('click', function () { show(cur - 1); arm(); });
+  if (next) next.addEventListener('click', function () { show(cur + 1); arm(); });
+  show(0); arm();
 })();
-</script>''', '''  show(0); arm();
+</script>''', '''  var prev = document.querySelector('.hero-prev'), next = document.querySelector('.hero-next');
+  if (prev) prev.addEventListener('click', function () { show(cur - 1); arm(); });
+  if (next) next.addEventListener('click', function () { show(cur + 1); arm(); });
+  show(0); arm();
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -444,6 +457,8 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
   background: var(--vermilion); box-shadow: 0 0 10px var(--vermilion); }
 .hero-slide-cap i { font-style: normal; color: var(--ember); }
 .hero-slide-cap b { font-weight: 500; color: var(--bone); letter-spacing: .2em; }
+.hero-slide-nav { display: flex; gap: 10px; margin-top: 18px; }
+.hero-slide-nav .dest-btn { width: 42px; height: 42px; font-size: 16px; }
 .hero-slide-cap.is-swap b, .hero-slide-cap.is-swap .place { animation: cap-in .6s var(--ease-out) both; }
 @keyframes cap-in { from { opacity: 0; transform: translate3d(0, 6px, 0); } to { opacity: 1; transform: none; } }
 #gate { background: linear-gradient(180deg, rgba(5,7,10,.96), rgba(5,7,10,.62) 45%, rgba(5,7,10,.96)),
