@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>In Way Tour — Приключения ждут</title>
-<meta name="description" content="In Way Tour — туристическая компания в Ташкенте. Индивидуальные и групповые туры: Турция, ОАЭ, Бали, Таиланд, Египет, Вьетнам, Азербайджан.">
+<title>Kage — Where stillness reveals the unseen</title>
+<meta name="description" content="A five-chapter night walk through a Kyoto mountain temple. Charred cypress, lantern light and a vermilion moon, rendered live in WebGL.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2305070a'/%3E%3Ccircle cx='16' cy='17' r='8' fill='%23e0231c'/%3E%3Crect x='4' y='8' width='24' height='2.6' fill='%23dfe7e0'/%3E%3Crect x='7' y='13' width='18' height='2' fill='%23dfe7e0'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="secret-pathways-assets/fonts.css">
 <style>
@@ -285,17 +285,17 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .card:nth-child(1) .card-fr{
   background:
     linear-gradient(180deg,rgba(3,6,9,.04) 36%,rgba(3,6,9,.72) 100%),
-    url('secret-pathways-assets/generated/dest-istanbul.webp') center / cover no-repeat;
+    url('secret-pathways-assets/generated/kage-approach.webp') center / cover no-repeat;
 }
 .card:nth-child(2) .card-fr{
   background:
     linear-gradient(180deg,rgba(3,6,9,.06) 36%,rgba(3,6,9,.74) 100%),
-    url('secret-pathways-assets/generated/dest-dubai.webp') center / cover no-repeat;
+    url('secret-pathways-assets/generated/kage-lantern-court.webp') center / cover no-repeat;
 }
 .card:nth-child(3) .card-fr{
   background:
     linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),
-    url('secret-pathways-assets/generated/dest-bali.webp') center / cover no-repeat;
+    url('secret-pathways-assets/generated/kage-moonwater.webp') center / cover no-repeat;
 }
 .card-fr::after{ content:''; position:absolute; inset:0;
   background:linear-gradient(transparent 46%, rgba(4,6,9,.80)); pointer-events:none; }
@@ -882,27 +882,6 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   .mask-line > span,.word{ opacity:1 !important; transform:none !important; }
 }
 </style>
-<style id="threeui-page-typography">
-:root {
-  --vermilion: #e0231c;
-  --ember: #ff5a3c;
-}
-body { font-family: 'Onest', system-ui, -apple-system, 'Helvetica Neue', sans-serif; }
-body, .body, .body-lg, .num { font-weight: 300; }
-h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
-  font-family: 'Onest', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
-  font-weight: 400;
-}
-.display { letter-spacing: -0.012em; }
-.h-hero { font-size: clamp(26px, 3.05vw, 46px); }
-.h-sec { font-size: clamp(30px, 4vw, 60px); }
-.body-lg { font-size: clamp(14px, 1.02vw, 17px); }
-.body { font-size: 14px; }
-/* In Way Tour: the .jp slots carry Latin/Cyrillic tags instead of kanji, so they use the page's own Onest. */
-.jp { font-family: 'Onest', system-ui, -apple-system, 'Helvetica Neue', sans-serif; }
-/* In Way Tour: the side title is eleven letters, not three kanji, so it steps aside on narrow screens. */
-@media (max-width: 760px) { body[data-layout-hero="b"] .hero-side { display: none; } }
-</style>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
       data-layout-curriculum="b" data-layout-closing="b" data-layout-footer="b">
@@ -921,10 +900,10 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
         <path d="M6 12h32M9.5 17h25M22 8v28" stroke="#dfe7e0" stroke-width="1.2"/>
       </svg>
     </div>
-    <div class="pre-jp jp">IN WAY TOUR</div>
+    <div class="pre-jp jp">影の道</div>
     <div class="pre-bar"><i id="pre-fill"></i></div>
     <div class="pre-meta">
-      <span>Собираем маршрут</span><b><span id="pre-pct">0</span>%</b>
+      <span>Raising the mountain temple</span><b><span id="pre-pct">0</span>%</b>
     </div>
   </div>
 </div>
@@ -937,13 +916,13 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
       <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" stroke-width="1.5"/>
       <path d="M14 35.5h16" stroke="#dfe7e0" stroke-width="1.2" stroke-opacity=".6"/>
     </svg>
-    <span class="brand-tx"><b>IN WAY TOUR</b><i>ПУТЕШЕСТВИЯ ПО ВСЕМУ МИРУ</i></span>
+    <span class="brand-tx"><b>KAGE</b><i>HIDDEN REALMS OF KYOTO</i></span>
   </a>
   <nav class="nav-links" id="navlinks">
-    <a class="nav-link" href="#gate" data-cursor><span>О компании</span><span class="alt">01</span></a>
-    <a class="nav-link" href="#pathways" data-cursor><span>Направления</span><span class="alt">02</span></a>
-    <a class="nav-link" href="#lessons" data-cursor><span>Преимущества</span><span class="alt">03</span></a>
-    <a class="nav-link" href="#eternity" data-cursor><span>Контакты</span><span class="alt">04</span></a>
+    <a class="nav-link" href="#gate" data-cursor><span>Temples</span><span class="alt">伽藍</span></a>
+    <a class="nav-link" href="#pathways" data-cursor><span>Gardens</span><span class="alt">庭園</span></a>
+    <a class="nav-link" href="#lessons" data-cursor><span>Rituals</span><span class="alt">神事</span></a>
+    <a class="nav-link" href="#eternity" data-cursor><span>Afterlight</span><span class="alt">残光</span></a>
   </nav>
   <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>
 </header>
@@ -953,44 +932,44 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
 <!-- ============================================================ hero -->
 <section class="hero" id="hero" data-cam="0">
   <div class="hero-top">
-    <div class="eyebrow" data-rv="fade"><span class="dot"></span> Глава 00 — Ташкент, Узбекистан</div>
+    <div class="eyebrow" data-rv="fade"><span class="dot"></span> Chapter 00 — The Hidden Gate</div>
     <h1 class="display h-hero">
-      <span class="mask-line"><span>Приключения ждут —</span></span>
-      <span class="mask-line"><span>отправляйтесь</span></span>
-      <span class="mask-line"><span>с нами.</span></span>
+      <span class="mask-line"><span>Where stillness</span></span>
+      <span class="mask-line"><span>reveals the</span></span>
+      <span class="mask-line"><span>unseen.</span></span>
     </h1>
-    <p class="hero-sub body" data-rv="up">Уникальные маршруты и увлекательные туры, которые
-      подарят вам незабываемые эмоции и впечатления.</p>
+    <p class="hero-sub body" data-rv="up">Enter Kyoto through its quiet thresholds, where ritual,
+      craft, and memory shape the path.</p>
   </div>
 
   <div class="hero-spacer"></div>
 
   <div class="hero-foot">
-    <div class="hero-cue" data-rv="fade"><span>Листайте вниз</span><span class="track"><i></i></span></div>
+    <div class="hero-cue" data-rv="fade"><span>Scroll to enter</span><span class="track"><i></i></span></div>
     <div class="chapters" id="chips">
       <div class="chip" data-chip="0" data-rv="up" data-cursor><span class="num">01</span>
-        <span class="tx"><b>Индивидуальный подход</b><p>Уникальные маршруты с учётом всех пожеланий клиента.</p></span></div>
+        <span class="tx"><b>Thresholds</b><p>Discover the hidden gates that open on to deeper paths.</p></span></div>
       <div class="chip" data-chip="1" data-rv="up" data-cursor><span class="num">02</span>
-        <span class="tx"><b>Профессионализм</b><p>Опытная команда и поддержка на всех этапах путешествия.</p></span></div>
+        <span class="tx"><b>Still Gardens</b><p>Witness the courts where silence gently unfolds.</p></span></div>
       <div class="chip" data-chip="2" data-rv="up" data-cursor><span class="num">03</span>
-        <span class="tx"><b>Широкий выбор</b><p>От экзотических пляжей до культурных столиц мира.</p></span></div>
+        <span class="tx"><b>Sacred Craft</b><p>Embrace the hands and heritage that shape devotion.</p></span></div>
       <div class="chip" data-chip="3" data-rv="up" data-cursor><span class="num">04</span>
-        <span class="tx"><b>Онлайн-оплата</b><p>Выберите тур и оплатите через защищённый платёжный портал.</p></span></div>
+        <span class="tx"><b>Night Rituals</b><p>Explore the rites that awaken when the day is done.</p></span></div>
     </div>
   </div>
 
-  <a class="peek" href="#pathways" data-view="3" data-rv="fade" data-cursor aria-label="Превью: живая сцена, перейти к направлениям">
+  <a class="peek" href="#pathways" data-view="3" data-rv="fade" data-cursor aria-label="Preview: Sanmon, before the bell">
     <!-- data-frame, or the live view is blitted over the whole anchor and
          runs on down behind the caption instead of stopping at the frame -->
     <span class="peek-fr" data-frame></span>
     <span class="peek-play"><svg viewBox="0 0 22 22" fill="none"><path d="M8 5.6 16.4 11 8 16.4z" fill="#dfe7e0"/></svg></span>
-    <span class="peek-cap"><b class="jp">3D</b><i>Живая сцена — к направлениям</i></span>
+    <span class="peek-cap"><b class="jp">山門</b><i>Sanmon — before the bell</i></span>
   </a>
 
-  <div class="word-fb" aria-hidden="true">IN WAY</div>
+  <div class="word-fb" aria-hidden="true">KAGE</div>
 
   <div class="hero-side" data-rv="up">
-    <span class="v jp">IN WAY TOUR</span>
+    <span class="v jp">影の道</span>
   </div>
 </section>
 
@@ -1009,29 +988,29 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
     </span>
   </div>
   <div class="sec-head" data-rv="fade">
-    <span class="k"><b>01</b> — О компании</span><span class="rule"></span><span class="k jp">ABOUT</span>
+    <span class="k"><b>01</b> — The Sanmon</span><span class="rule"></span><span class="k jp">山門</span>
   </div>
   <div class="gate-grid">
-    <h2 class="display h-sec" data-rv="up">Воспоминания о будущем забронированы здесь.</h2>
+    <h2 class="display h-sec" data-rv="up">Charred cypress, worn stone, one gate left open.</h2>
     <div class="gate-copy">
-      <p class="lead" data-rv="up">С In Way Tour ваши будущие воспоминания уже ждут вас. Мы предлагаем незабываемые
-        путешествия в самые удивительные уголки мира. Каждый тур разрабатывается индивидуально, чтобы
-        подарить вам уникальные впечатления и эмоции.</p>
-      <p class="body" data-rv="up">In Way Tour — ведущая туристическая компания, специализирующаяся на организации
-        эксклюзивных путешествий по всему миру. Индивидуальные и групповые туры, корпоративные поездки,
-        тематические путешествия — только с надёжными партнёрами и на лучших условиях. Директор и
-        основатель компании — Ходжиматова Мохизодхон Бахтияровна.</p>
+      <p class="lead" data-rv="up">Kage begins where the city stops: a mountain gate of cedar burned black,
+        standing in its own weather. The soot is not decoration. It is how a board is taught to survive a
+        hundred rainy seasons, and the first thing this place asks you to understand.</p>
+      <p class="body" data-rv="up">Climb the worn steps and the worship hall lifts out of the mist, its paper
+        screens lit from inside like a lantern the size of a house. Above the eaves a vermilion moon holds
+        its place, patient, half hidden. Nothing here is in a hurry. Neither, for the next ninety minutes,
+        are you.</p>
       <a class="arrowlink" href="#pathways" data-rv="fade" data-cursor>
-        <span>Смотреть направления</span>
+        <span>Cross the threshold</span>
         <span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
       </a>
     </div>
   </div>
   <div class="gate-stats" data-rv="up">
-    <div><b>5+</b><span>Лет опыта</span></div>
-    <div><b>9</b><span>Направлений</span></div>
-    <div><b>6</b><span>Программ туров</span></div>
-    <div><b>∞</b><span>Впечатлений</span></div>
+    <div><b>05</b><span>Chapters</span></div>
+    <div><b>92</b><span>Minutes</span></div>
+    <div><b>1611</b><span>Hall raised</span></div>
+    <div><b>∞</b><span>Stillness</span></div>
   </div>
 </section>
 
@@ -1053,29 +1032,32 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
     </span>
   </div>
   <div class="sec-head" data-rv="fade">
-    <span class="k"><b>02</b> — Направления</span><span class="rule"></span><span class="k jp">TOURS</span>
+    <span class="k"><b>02</b> — Still Gardens</span><span class="rule"></span><span class="k jp">庭園</span>
   </div>
   <div class="cards" id="cards">
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-view="0" data-cursor>
       <div class="card-fr" data-frame>
                 <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-        <div class="card-lab"><b>Стамбул</b><span class="jp">TR</span></div>
+        <i class="glow" style="--gx:80.2%; --gy:23.9%; --gr:22%; --gt:6.1s; --gt2:9.7s; --gc1:rgba(255,142,108,.50); --gc2:rgba(212,56,38,.24)"></i>
+        <div class="card-lab"><b>Approach</b><span class="jp">参道</span></div>
       </div>
-      <div class="card-meta"><span>Турция</span><span>01 / 03</span></div>
+      <div class="card-meta"><span>The long climb</span><span>01 / 03</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-view="1" data-cursor>
       <div class="card-fr" data-frame>
                 <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-        <div class="card-lab"><b>Дубай</b><span class="jp">AE</span></div>
+        <i class="glow glow--flame" style="--gx:70.5%; --gy:47.2%; --gr:14%; --gt:3.7s; --gt2:5.3s; --gc1:rgba(255,198,124,.62); --gc2:rgba(226,118,40,.30)"></i>
+        <div class="card-lab"><b>Lanterns</b><span class="jp">灯籠</span></div>
       </div>
-      <div class="card-meta"><span>ОАЭ</span><span>02 / 03</span></div>
+      <div class="card-meta"><span>Lantern court</span><span>02 / 03</span></div>
     </article>
-    <article class="card" data-rv="up" data-cursor>
+    <article class="card" data-rv="up" data-view="2" data-cursor>
       <div class="card-fr" data-frame>
                 <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-        <div class="card-lab"><b>Бали</b><span class="jp">ID</span></div>
+        <i class="glow" style="--gx:48.0%; --gy:16.8%; --gr:20%; --gt:7.3s; --gt2:11.2s; --gc1:rgba(255,138,104,.52); --gc2:rgba(208,54,36,.24)"></i>
+        <div class="card-lab"><b>Moonwater</b><span class="jp">月影</span></div>
       </div>
-      <div class="card-meta"><span>Индонезия</span><span>03 / 03</span></div>
+      <div class="card-meta"><span>The wet court</span><span>03 / 03</span></div>
     </article>
   </div>
 </section>
@@ -1095,49 +1077,43 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
     </span>
   </div>
   <div class="sec-head" data-rv="fade">
-    <span class="k"><b>03</b> — Преимущества</span><span class="rule"></span><span class="k jp">WHY US</span>
+    <span class="k"><b>03</b> — Sacred Craft</span><span class="rule"></span><span class="k jp">手業</span>
   </div>
   <div class="cur-head">
-    <h2 class="display h-sec" data-rv="up">Индивидуально. Надёжно. По всему миру.</h2>
-    <p class="body-lg" data-rv="up">Каждый маршрут мы собираем под вас: от экзотических пляжей Филиппин и Таиланда
-      до древних городов Турции, Египта и Азербайджана.</p>
+    <h2 class="display h-sec" data-rv="up">Five chapters. Ninety minutes. One quiet mind.</h2>
+    <p class="body-lg" data-rv="up">Each chapter is a walk, not a lecture. You arrive at the gate, climb the
+      steps, sit with the lantern, and leave with one thing worth keeping.</p>
   </div>
   <div class="cur" id="cur">
     <div class="les" data-les="0" data-cursor>
       <span class="k">01</span>
-      <h3>Филиппины<em class="jp">PH</em></h3>
-      <p>Восхитительные пляжи, кристально чистая вода и коралловые рифы живописных островов.</p>
-      <span class="t">Тропический рай</span><i class="bar"></i>
+      <h3>The Hidden Gate<em class="jp">山門</em></h3>
+      <p>Why a gate is a sentence, and what you agree to when you walk under one.</p>
+      <span class="t">14 min</span><i class="bar"></i>
     </div>
     <div class="les" data-les="1" data-cursor>
       <span class="k">02</span>
-      <h3>Вьетнам и Камбоджа<em class="jp">VN</em></h3>
-      <p>Яркие пляжи Вьетнама и древние храмы Ангкор-Вата, наполненные историей.</p>
-      <span class="t">Два в одном</span><i class="bar"></i>
+      <h3>Borrowed Scenery<em class="jp">借景</em></h3>
+      <p>Shakkei: composing with a mountain you will never own.</p>
+      <span class="t">18 min</span><i class="bar"></i>
     </div>
     <div class="les" data-les="2" data-cursor>
       <span class="k">03</span>
-      <h3>Азербайджан<em class="jp">AZ</em></h3>
-      <p>Древние города, уникальная культура, местная кухня и живописные пейзажи.</p>
-      <span class="t">Кавказ</span><i class="bar"></i>
+      <h3>Charred Cypress<em class="jp">焼杉</em></h3>
+      <p>Yakisugi: burning a board black so the weather will let it live.</p>
+      <span class="t">21 min</span><i class="bar"></i>
     </div>
     <div class="les" data-les="3" data-cursor>
       <span class="k">04</span>
-      <h3>Турция<em class="jp">TR</em></h3>
-      <p>Эфес и Троя, пляжи Эгейского и Средиземного морей, гостеприимство и кухня.</p>
-      <span class="t">История и курорты</span><i class="bar"></i>
+      <h3>Lantern Light<em class="jp">灯籠</em></h3>
+      <p>How a single ember decides the scale of everything around it.</p>
+      <span class="t">17 min</span><i class="bar"></i>
     </div>
     <div class="les" data-les="4" data-cursor>
       <span class="k">05</span>
-      <h3>Египет<em class="jp">EG</em></h3>
-      <p>Пирамиды Гизы, храмы Луксора и курорты Красного моря для дайвинга.</p>
-      <span class="t">Красное море</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="5" data-cursor>
-      <span class="k">06</span>
-      <h3>Таиланд<em class="jp">TH</em></h3>
-      <p>Буддийские храмы Бангкока, тайская кухня и пляжи Пхукета и Ко Самуи.</p>
-      <span class="t">Острова и храмы</span><i class="bar"></i>
+      <h3>The Vermilion Moon<em class="jp">朱月</em></h3>
+      <p>Why the moon burns red over the valley, and what the garden does with it.</p>
+      <span class="t">22 min</span><i class="bar"></i>
     </div>
   </div>
 </section>
@@ -1159,12 +1135,12 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
       <img src="secret-pathways-assets/foreground/png/sakura-branch.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
     </span>
   </div>
-  <div class="eyebrow" data-rv="fade">Глава 04 — Контакты</div>
-  <h2 class="display" data-rv="up">Контакты</h2>
-  <p class="body-lg" data-rv="up">Позвоните или напишите: +998 93 982 11 10, info@inwaytour.uz. Работаем с 09:00 до 18:00.
-    Ташкент, ул. Паркент-2, дом 1, кв. № 17.</p>
-  <a class="cta" href="tel:+998939821110" data-rv="fade" data-cursor>
-    <i></i><span>Позвонить</span>
+  <div class="eyebrow" data-rv="fade">Chapter 04 — Afterlight</div>
+  <h2 class="display" data-rv="up">Afterlight</h2>
+  <p class="body-lg" data-rv="up">The gate does not close behind you. Take the walk whenever the noise
+    gets loud — it is always the same path, and never the same light.</p>
+  <a class="cta" href="#top" data-rv="fade" data-cursor>
+    <i></i><span>Begin the walk</span>
     <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
   </a>
 </section>
@@ -1189,31 +1165,31 @@ h1:not(.jp), h2:not(.jp), h3:not(.jp), .display:not(.jp) {
         <circle cx="22" cy="25" r="8.6" fill="#e0231c" fill-opacity=".9"/>
         <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" stroke-width="1.5"/>
       </svg>
-      <p>In Way Tour — туристическая компания в Ташкенте. Индивидуальные и групповые туры,
-        корпоративные поездки и тематические путешествия по всему миру.</p>
+      <p>A five-chapter night walk through a Kyoto mountain temple. Three illustrated garden field notes
+        sit inside a live Three.js sanctuary.</p>
     </div>
-    <div><h4>Разделы</h4><ul>
-      <li><a href="#gate" data-cursor>О компании</a></li>
-      <li><a href="#pathways" data-cursor>Направления</a></li>
-      <li><a href="#lessons" data-cursor>Преимущества</a></li>
-      <li><a href="#eternity" data-cursor>Контакты</a></li>
+    <div><h4>Chapters</h4><ul>
+      <li><a href="#gate" data-cursor>The Sanmon</a></li>
+      <li><a href="#pathways" data-cursor>Still Gardens</a></li>
+      <li><a href="#lessons" data-cursor>Sacred Craft</a></li>
+      <li><a href="#eternity" data-cursor>Afterlight</a></li>
     </ul></div>
-    <div><h4>Туры</h4><ul>
-      <li><a href="#lessons" data-cursor>Филиппины</a></li>
-      <li><a href="#lessons" data-cursor>Вьетнам и Камбоджа</a></li>
-      <li><a href="#lessons" data-cursor>Турция</a></li>
-      <li><a href="#lessons" data-cursor>Египет</a></li>
+    <div><h4>Practice</h4><ul>
+      <li><a href="#lessons" data-cursor>Borrowed scenery</a></li>
+      <li><a href="#lessons" data-cursor>Lantern light</a></li>
+      <li><a href="#lessons" data-cursor>Charred cypress</a></li>
+      <li><a href="#lessons" data-cursor>Raked gravel</a></li>
     </ul></div>
-    <div><h4>Связь</h4><ul>
-      <li><a href="tel:+998939821110" data-cursor>+998 93 982 11 10</a></li>
-      <li><a href="mailto:info@inwaytour.uz" data-cursor>info@inwaytour.uz</a></li>
-      <li><a href="#eternity" data-cursor>Ташкент, ул. Паркент-2, 1</a></li>
+    <div><h4>Elsewhere</h4><ul>
+      <li><a href="#top" data-cursor>Journal</a></li>
+      <li><a href="#top" data-cursor>Field notes</a></li>
+      <li><a href="#top" data-cursor>Colophon</a></li>
     </ul></div>
   </div>
   <div class="foot-base">
-    <span>© 2024 In Way Tour</span>
-    <span class="jp">ИНН 311374859 · МФО 00433</span>
-    <span>WebGL · Onest · Ташкент</span>
+    <span>© 2026 Kage — Kage no Michi</span>
+    <span class="jp">静けさは一つの技である</span>
+    <span>WebGL · Onest · Kyoto</span>
   </div>
 </footer>
 
@@ -3048,9 +3024,9 @@ function buildWordmark() {
      edge while the caps come back down to the height of the headline block. */
   const SZ = 320, TRACK = .40, PAD = 26;
   const m = cvs(4, 4).getContext('2d');
-  m.font = '700 ' + SZ + 'px Onest, sans-serif';
+  m.font = '600 ' + SZ + 'px Wordmark, sans-serif';
   m.textBaseline = 'alphabetic'; m.textAlign = 'left';
-  const word = 'IN WAY', gl = [];
+  const word = 'KAGE', gl = [];
   let pen = 0, ascMax = 0, descMax = 0, xMin = 1e9, xMax = -1e9;
   for (const ch of word) {
     const t = m.measureText(ch);
@@ -3066,7 +3042,7 @@ function buildWordmark() {
   gl.forEach((g, i) => {
     const cw = Math.ceil(g.l + g.r) + PAD * 2, chh = Math.ceil(g.asc + g.desc) + PAD * 2;
     const c = cvs(cw, chh), x = c.getContext('2d');
-    x.font = '700 ' + SZ + 'px Onest, sans-serif';
+    x.font = '600 ' + SZ + 'px Wordmark, sans-serif';
     x.textBaseline = 'alphabetic'; x.textAlign = 'left';
     /* the vertical wash is baked per glyph so the whole word shares one ramp */
     const gy0 = PAD + g.asc - ascMax, gy1 = PAD + g.asc + descMax * .4;
@@ -4353,7 +4329,7 @@ function wireHeroExit() {
 function wireNav() {
   let last = 0;
   const rail = $('#rail');
-  const names = ['Главная', 'О компании', 'Направления', 'Преимущества', 'Контакты', 'Подвал'];
+  const names = ['The Hidden Gate', 'The Sanmon', 'Still Gardens', 'Sacred Craft', 'Afterlight', 'Colophon'];
   SECS.forEach((s, i) => {
     const b = document.createElement('button');
     b.innerHTML = '<i></i>'; b.title = names[i] || '';
@@ -4725,13 +4701,13 @@ function queue() { TIMER ? setTimeout(() => frame(performance.now()), 16) : requ
 
 /* ======================================================== 14 · booting */
 const JOBS = [
-  ['Читаем шрифт', () => document.fonts && document.fonts.load('700 320px Onest')],
-  ['Заливаем землю', () => { initGL(); WORLD.uT = { value: 0 }; buildRig(); buildLights(); }],
-  ['Прокладываем дорогу', () => buildShell()],
-  ['Поднимаем зал', () => buildTemple()],
-  ['Вешаем луну', () => buildMoon()],
-  ['Ставим ворота', () => buildTorii()],
-  ['Раскладываем камни', () => {
+  ['Reading the type', () => document.fonts && document.fonts.load('600 320px Wordmark')],
+  ['Pouring the ground', () => { initGL(); WORLD.uT = { value: 0 }; buildRig(); buildLights(); }],
+  ['Cutting the approach', () => buildShell()],
+  ['Raising the hall', () => buildTemple()],
+  ['Hanging the moon', () => buildMoon()],
+  ['Setting the gate', () => buildTorii()],
+  ['Placing the stones', () => {
     buildRocks();
     buildLantern(7.4, -7.0, 1.15); buildLantern(-7.6, -5.2, 1.0);
     /* The pairs flanking the flight were given flat heights — 2 and PODIUM —
@@ -4748,15 +4724,15 @@ const JOBS = [
       buildLantern(-cheekX(z), z, sc, cheekTop(z));
     });
   }],
-  ['Растим клёны', () => {
+  ['Growing the maples', () => {
     buildMaple(71, 12.6, -13.0, 1.05); buildMaple(72, -11.8, -9.4, .95);
     buildMaple(73, 9.2, -19.0, .82);   buildMaple(74, -14.5, -17.5, 1.0);
     buildMaple(75, 16.5, -6.0, .88);
   }],
-  ['Рисуем траву', () => buildForeground()],
-  ['Вырезаем слово', () => buildWordmark()],
-  ['Поднимаем туман', () => { buildAtmosphere(); buildLeafFall(); buildWisps(); }],
-  ['Полируем воду', () => {
+  ['Painting the near grass', () => buildForeground()],
+  ['Cutting the word', () => buildWordmark()],
+  ['Raising the mist', () => { buildAtmosphere(); buildLeafFall(); buildWisps(); }],
+  ['Polishing the water', () => {
     initPost(); buildCards(); buildCardCloth();
     WORLD.fg.forEach(m => m.layers.set(1));
     WORD.glyphs.forEach(m => m.layers.set(2));
